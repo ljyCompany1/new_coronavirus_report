@@ -12,7 +12,7 @@ public class Questionnaire {
     private String teacherNumber;//教师：教工号
     private String studentNumber;//学生：学号
     private String tel;//手机号，为保证准确性，依旧采用人工录入
-    private String workType;//教师：工作岗位
+    private String workType;//教师：岗位或所授学科.工作岗位
     private Boolean practice;//学生：是否正在实习。true表示有，false表示没有。
     //表单取消下面字段填写，由数据库直接获取
     private String sex;//性别。两个选项：男，女。取消表单该字段
