@@ -121,7 +121,7 @@ public class QuestionnaireService {
         //如果密切接触过来自或到达过湖北疫区人员情况表
         if(questionnaire.getTouchHuBeiPerson()){
             if(questionnaire.getTouchHuBeiTime()==null){
-                throw new MyWebException("提交失败：必须填写疫区居住地");
+                throw new MyWebException("提交失败：必须填写密切接触的时间");
             }
             if(StringUtils.isEmpty(questionnaire.getTouchHuBeiDescription())){
                 throw new MyWebException("提交失败：必须描述和疫区人员密切接触过程");
