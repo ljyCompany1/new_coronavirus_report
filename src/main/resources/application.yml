@@ -1,0 +1,42 @@
+#服务端配置
+server:
+  port: 8091   #端口号
+  servlet:
+    session:
+      timeout: 120m #设置过期时间为120分钟
+
+
+
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml #扫描mybatis的mapper.xml文件
+  type-aliases-package: com.lcvc.new_coronavirus_report.model #起别名，指向实体类的位置，可省略写mybatis的xml中的resultType的全路径，取代<typeAlias alias="Admin" type="com.ljy.maven_github_ssm.model.Admin"/>
+
+spring:
+  devtools:
+    restart:
+      enabled: true  #开启自动启动
+#  mvc:
+#    static-path-pattern: /static/**
+  thymeleaf:
+    cache: false #缓存（开发时设置为false）
+  #jdbc配置，springboot默认会把spring.datasource开头的信息收纳，进行DataSource对象的配置，进而进行sqlSessionFactory的配置等相关数据库连接的配置，从而省略了application.xml中的相关
+  datasource:
+      url: jdbc:mysql://localhost:3306/new_coronavirus_report?characterEncoding=utf-8&serverTimezone=CTT
+      username: user
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+  jackson:    #设置全局json格式
+    date-format: yyyy-MM-dd HH:mm:ss   #将日期类型设置为字符串表示
+    time-zone: GMT+8
+
+  mvc: #针对form表单格式
+    dateFormat: yyyy-MM-dd HH:mm:ss #将日期类型设置为字符串表示
+  servlet:
+    multipart:
+      maxFileSize: 100MB #单个上传文件的最大限制
+      maxRequestSize: 100MB  #所有上传文件的最大限制
+#控制台打印sql语句
+#logging:
+#  level:
+#    com.lcvc.ebuy_springboot.dao: DEBUG
