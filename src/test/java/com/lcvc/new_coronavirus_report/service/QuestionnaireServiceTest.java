@@ -19,39 +19,41 @@ public class QuestionnaireServiceTest {
 
     @Test
     public void testSave(){
-        //创建对象
         Questionnaire questionnaire=new Questionnaire();
         //根据业务逻辑一个一个字段进行验证
         //录入各个字段信息进行保存
-        questionnaire.setIdentity("teacher");
-        questionnaire.setTeacherNumber("123123");
-
+        questionnaire.setIdentity("student");
+        questionnaire.setStudentNumber("174013097");
         questionnaire.setName("历史");
-        /*questionnaire.setTeacherNumber("123123132");
-        questionnaire.setStudentNumber("123132132");
-        questionnaire.setSex("男");
+        questionnaire.setWorkType("软件技术");
+        questionnaire.setMyHealth("健康");
+        questionnaire.setTouchHuBeiPerson(true);
+        questionnaire.setEpidemicArea("武汉不知道那里");
+        questionnaire.setConfirmIll(true);
+        questionnaire.setComefromHuBei(true);
+        questionnaire.setComefromWuHan(true);
+        questionnaire.setArriveHuBei(true);
+        questionnaire.setArriveWuHan(true);
+        questionnaire.setLeaveHubei(new Date());
+        questionnaire.setLeaveHubeiWay("wu");
+        questionnaire.setLeaveLiuZhou(new Date());
         questionnaire.setRegisteredPlace("五星街");
+        questionnaire.setMyfamilyHealth("健康");
+        questionnaire.setSex("男");
+        questionnaire.setTouchHuBeiTime(new Date());
         questionnaire.setIdentityCard("111112222233333111");
         questionnaire.setTel("17878011321");
-        questionnaire.setWorkType("软件技术");
         questionnaire.setPractice(true);
-        questionnaire.setComefromHuBei(false);
-        questionnaire.setComefromWuHan(false);
-        questionnaire.setArriveHuBei(false);
-        questionnaire.setEpidemicArea("武汉不知道那里");
-        questionnaire.setAddressInLiuZhou("l柳州着");
+        questionnaire.setTouchHuBeiDescription("就这样");
         questionnaire.setManageMethods("管理方式很严格哦");
         questionnaire.setArriveLiuZhou(new Date());
         questionnaire.setLeaveLiuZhou(new Date());
-        questionnaire.setLeaveHubeiWay("wu");
         questionnaire.setLeaveTogetherPersonName("zhangzhang");
-        questionnaire.setTouchHuBeiPerson(false);
-        questionnaire.setConfirmIll(false);
-        questionnaire.setMyfamilyHealth("健康");
-        questionnaire.setMyHealth("健康");
         questionnaire.setIntro("wuwuw");
-        questionnaire.setIp("123.1.1");*/
-        questionnaireService.save(questionnaire);//保存后去数据库检查相关字段是否有值
+        questionnaire.setIp("123.1.1");
+        questionnaire.setAddressInLiuZhou("鱼峰区");
+
+        questionnaireService.save(questionnaire,"192.142.11.9");//保存后去数据库检查相关字段是否有值
         //questionnaireDao.save(questionnaire);//保存后去数据库检查相关字段是否有值
     }
 
