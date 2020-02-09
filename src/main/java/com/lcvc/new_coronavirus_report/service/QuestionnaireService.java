@@ -35,7 +35,7 @@ public class QuestionnaireService {
     /**
      * 保存表格
      */
-    public void saveReport(@NotNull Questionnaire questionnaire){
+    public void save(@NotNull Questionnaire questionnaire){
         //验证教工号或学号，并赋予相应信息
         if(questionnaire.getIdentity().equals("teacher")){
             if(StringUtils.isEmpty(questionnaire.getWorkType())){

@@ -8,9 +8,15 @@
     </select>
 
     <insert id="save"  useGeneratedKeys="true" keyProperty="id">
-          insert into questionnaire(id,username,password,name,createTime)
-          values(null,#{username},#{password},#{name},now())
-    </insert>
+      insert into questionnaire(id,teacherNumber,studentNumber,sex,name,registeredPlace,
+      identityCard,tel,workType,practice,comefromHuBei,comefromWuHan,arriveHuBei,epidemicArea,
+      addressInLiuZhou,arriveLiuZhou,leaveLiuZhou,leaveHubei,leaveHubeiWay,leaveTogetherPersonName,
+      manageMethods,touchHuBeiPerson,confirmIll,myHealth,myfamilyHealth,intro,ip,createTime)
+      values(null,#{teacherNumber},#{studentNumber},#{sex},#{name},#{registeredPlace},
+      #{identityCard},#{tel},#{workType},#{practice},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{epidemicArea},
+      #{addressInLiuZhou},#{arriveLiuZhou},#{leaveLiuZhou},#{leaveHubei},#{leaveHubeiWay},#{leaveTogetherPersonName},
+      #{manageMethods},#{touchHuBeiPerson},#{confirmIll},#{myHealth},#{myfamilyHealth},#{intro},#{ip},now())
+</insert>
 
 
     <delete id="delete" >

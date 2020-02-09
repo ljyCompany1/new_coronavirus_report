@@ -21,7 +21,7 @@ public class QuestionnaireServiceTest {
     public void testSave(){
         //创建对象
         Questionnaire questionnaire=new Questionnaire();
-        //根据逻辑一个一个字段进行验证
+        //根据业务逻辑一个一个字段进行验证
 
         //录入各个字段信息进行保存
         questionnaire.setName("历史");

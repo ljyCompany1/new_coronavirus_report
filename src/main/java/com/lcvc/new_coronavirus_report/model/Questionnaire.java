@@ -7,6 +7,7 @@ import java.util.Date;
  * 统计1月16日后的信息
  */
 public class Questionnaire {
+    private Integer id;//主键
     //基本信息
     private String identity;//填表人身份。"teacher"表示教师；"student"表示学生
     private String teacherNumber;//教师：教工号
@@ -284,5 +285,13 @@ public class Questionnaire {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

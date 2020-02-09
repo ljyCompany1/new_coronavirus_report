@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@RestController(value = "/api/backstage/report")
+@RestController(value = "/api/backstage/questionnaire")
 public class QuestionnaireController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class QuestionnaireController {
     public Map<String, Object> login(@RequestBody Questionnaire questionnaire){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
-        questionnaireService.saveReport(questionnaire);
+        questionnaireService.save(questionnaire);
         return map;
     }
 
