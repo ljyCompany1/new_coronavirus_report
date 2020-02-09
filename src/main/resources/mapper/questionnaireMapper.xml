@@ -8,14 +8,14 @@
     </select>
 
     <insert id="save"  useGeneratedKeys="true" keyProperty="id">
-      insert into questionnaire(id,teacherNumber,studentNumber,sex,name,registeredPlace,
-      identityCard,tel,workType,practice,comefromHuBei,comefromWuHan,arriveHuBei,epidemicArea,
+      insert into questionnaire(id,identity,teacherNumber,studentNumber,sex,name,registeredPlace,
+      identityCard,tel,workType,practice,comefromHuBei,comefromWuHan,arriveHuBei,arriveWuHan,epidemicArea,
       addressInLiuZhou,arriveLiuZhou,leaveLiuZhou,leaveHubei,leaveHubeiWay,leaveTogetherPersonName,
-      manageMethods,touchHuBeiPerson,confirmIll,myHealth,myfamilyHealth,intro,ip,createTime)
-      values(null,#{teacherNumber},#{studentNumber},#{sex},#{name},#{registeredPlace},
-      #{identityCard},#{tel},#{workType},#{practice},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{epidemicArea},
+      manageMethods,touchHuBeiPerson,touchHuBeiTime,touchHuBeiDescription,schoolClass,myHealth,myfamilyHealth,intro,ip,createTime)
+      values(null,#{identity},#{teacherNumber},#{studentNumber},#{sex},#{name},#{registeredPlace},
+      #{identityCard},#{tel},#{workType},#{practice},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{arriveWuHan},#{epidemicArea},
       #{addressInLiuZhou},#{arriveLiuZhou},#{leaveLiuZhou},#{leaveHubei},#{leaveHubeiWay},#{leaveTogetherPersonName},
-      #{manageMethods},#{touchHuBeiPerson},#{confirmIll},#{myHealth},#{myfamilyHealth},#{intro},#{ip},now())
+      #{manageMethods},#{touchHuBeiPerson},#{touchHuBeiTime},#{touchHuBeiDescription},#{schoolClass},#{myHealth},#{myfamilyHealth},#{intro},#{ip},now())
 </insert>
 
 

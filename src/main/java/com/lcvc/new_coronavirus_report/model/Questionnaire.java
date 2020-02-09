@@ -15,10 +15,11 @@ public class Questionnaire {
     private String tel;//手机号，为保证准确性，依旧采用人工录入
     private String workType;//教师：岗位或所授学科.工作岗位
     private Boolean practice;//学生：是否正在实习。true表示有，false表示没有。
+    private String identityCard;//身份证号。前端运行，建议先读取该教师/学生的信息，如果有身份证号则直接加载到身份证表单里。
+
     //表单取消下面字段填写，由数据库直接获取
     private String sex;//性别。两个选项：男，女。取消表单该字段
     private String name;//姓名。取消表单该字段
-    private String identityCard;//身份证号。取消表单该字段
 
     //当天健康情况汇报，以及和另外7个表的重叠
     private String myHealth;//当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明
@@ -26,6 +27,11 @@ public class Questionnaire {
     private Boolean touchHuBeiPerson;//当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。
     private String touchHuBeiPersonName;//接触过疫区人员的姓名，可以写多个。只有在touchHuBeiPerson为true的前提下才填写
     private Boolean confirmIll;//是否为疑似病例或确诊病例。两个选项：医院已确诊；否，身体健康。true表示有，false表示没有。
+
+    //如果密切接触过疫区人员要填的字段
+    private Date touchHuBeiTime;//密切接触的时间。接触过疫区人员，都要填；否则为空
+    private String touchHuBeiDescription;//密切接触过程的具体描述。接触过疫区人员，都要填；否则为空
+    private String schoolClass;//年级班级（专业）。接触过疫区人员，都要填；否则为空。取消表单该字段，
 
     //来自武汉湖北，或是去过武汉湖北相关字段
     private Boolean comefromHuBei;//是否来自湖北(不包括武汉市)。true表示是，false表示不是
@@ -293,5 +299,29 @@ public class Questionnaire {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getTouchHuBeiTime() {
+        return touchHuBeiTime;
+    }
+
+    public void setTouchHuBeiTime(Date touchHuBeiTime) {
+        this.touchHuBeiTime = touchHuBeiTime;
+    }
+
+    public String getTouchHuBeiDescription() {
+        return touchHuBeiDescription;
+    }
+
+    public void setTouchHuBeiDescription(String touchHuBeiDescription) {
+        this.touchHuBeiDescription = touchHuBeiDescription;
+    }
+
+    public String getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(String schoolClass) {
+        this.schoolClass = schoolClass;
     }
 }

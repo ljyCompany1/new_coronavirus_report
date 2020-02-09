@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 09/02/2020 17:03:43
+ Date: 09/02/2020 21:12:46
 */
 
 SET NAMES utf8mb4;
@@ -41,18 +41,24 @@ INSERT INTO `admin` VALUES (1, 'admin', 'b294pcjitlvg48j6idhhaok94bcook2m', '管
 DROP TABLE IF EXISTS `questionnaire`;
 CREATE TABLE `questionnaire`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `identity` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '//填表人身份。\"teacher\"表示教师；\"student\"表示学生',
   `teacherNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
   `studentNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生学号',
-  `sex` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别，男或女',
-  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `registeredPlace` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '户口所在地',
-  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证号',
   `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号码',
   `workType` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师：工作岗位',
   `practice` tinyint(1) NULL DEFAULT NULL COMMENT '学生：是否正在实习。true表示有，false表示没有。',
-  `comefromHuBei` tinyint(1) NULL DEFAULT NULL COMMENT '是否来自湖北(不包括武汉市)。true表示是，false表示不是',
-  `comefromWuHan` tinyint(1) NULL DEFAULT NULL COMMENT '是否来自武汉市。true表示是，false表示不是',
-  `arriveHuBei` tinyint(1) NULL DEFAULT NULL COMMENT '1月16日后，是否去过湖北(不包括武汉市)。true表示是，false表示不是',
+  `sex` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别，男或女',
+  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
+  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证号',
+  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
+  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
+  `touchHuBeiPerson` bit(1) NULL DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
+  `touchHuBeiTime` datetime(6) NULL DEFAULT NULL COMMENT '密切接触的时间。接触过疫区人员，都要填；否则为空',
+  `touchHuBeiDescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密切接触过程的具体描述。接触过疫区人员，都要填；否则为空',
+  `comefromHuBei` bit(1) NULL DEFAULT NULL COMMENT '是否来自湖北(不包括武汉市)。true表示是，false表示不是',
+  `comefromWuHan` bit(1) NULL DEFAULT NULL COMMENT '是否来自武汉市。true表示是，false表示不是',
+  `arriveHuBei` bit(1) NULL DEFAULT NULL COMMENT '1月16日后，是否去过湖北(不包括武汉市)。true表示是，false表示不是',
+  `arriveWuHan` bit(1) NULL DEFAULT NULL COMMENT '1月16日后，是否到过武汉。true表示是，false表示不是',
   `epidemicArea` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '疫区居住地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
   `addressInLiuZhou` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '柳州居住地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
   `arriveLiuZhou` datetime(6) NULL DEFAULT NULL COMMENT '到达柳州的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
@@ -61,15 +67,20 @@ CREATE TABLE `questionnaire`  (
   `leaveHubeiWay` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '离开湖北的方式。提示用户填（用文本框）：车次/航班/汽车/自驾。只要去过湖北或武汉，或是来自湖北或武汉，都要填；',
   `leaveTogetherPersonName` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '离开时同行的人姓名，可以多写。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
   `manageMethods` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '管控措施（如为居家隔离，请询问是否有社区每日随访、是否有外出买菜、下楼活动等情况）。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
-  `touchHuBeiPerson` tinyint(1) NULL DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
-  `confirmIll` tinyint(1) NULL DEFAULT NULL COMMENT '是否为疑似病例或确诊病例。两个选项：医院已确诊；否，身体健康。true表示有，false表示没有。',
-  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
-  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
+  `registeredPlace` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '户口所在地',
   `intro` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其他说明。用于备注字段',
   `ip` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址，由系统自动填入',
+  `schoolClass` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '年级班级（专业）',
   `createTime` datetime(6) NULL DEFAULT NULL COMMENT '填表时间，由数据库写入',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of questionnaire
+-- ----------------------------
+INSERT INTO `questionnaire` VALUES (23, 'teacher', '123123132', '123132132', '17878011321', '软件技术', 1, '男', '历史', '111112222233333111', '健康', '健康', b'0', '2020-02-09 21:01:39.529000', '在那里解除了疫区群众，交代清楚', b'0', b'0', b'0', NULL, '武汉不知道那里', 'l柳州着', '2020-02-09 21:01:39.529000', '2020-02-09 21:01:39.529000', NULL, 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '123.1.1', NULL, '2020-02-09 21:01:40.000000');
+INSERT INTO `questionnaire` VALUES (24, 'teacher', '123123132', '123132132', '17878011321', '软件技术', 1, '男', '历史', '111112222233333111', '健康', '健康', b'0', '2020-02-09 21:03:09.696000', '在那里解除了疫区群众，交代清楚', b'0', b'0', b'0', NULL, '武汉不知道那里', 'l柳州着', '2020-02-09 21:03:09.697000', '2020-02-09 21:03:09.697000', '2020-02-09 21:03:09.697000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '123.1.1', '2018软件1班', '2020-02-09 21:03:11.000000');
+INSERT INTO `questionnaire` VALUES (25, 'teacher', '123123132', '123132132', '17878011321', '软件技术', 1, '男', '历史', '111112222233333111', '健康', '健康', b'0', '2020-02-09 21:04:28.402000', '在那里解除了疫区群众，交代清楚', b'0', b'0', b'0', b'1', '武汉不知道那里', 'l柳州着', '2020-02-09 21:04:28.402000', '2020-02-09 21:04:28.402000', '2020-02-09 21:04:28.402000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '123.1.1', '2018软件1班', '2020-02-09 21:04:29.000000');
 
 -- ----------------------------
 -- Table structure for student

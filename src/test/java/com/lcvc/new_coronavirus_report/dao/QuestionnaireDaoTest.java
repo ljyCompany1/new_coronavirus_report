@@ -21,6 +21,12 @@ public class QuestionnaireDaoTest {
         //创建对象
         Questionnaire questionnaire=new Questionnaire();
         //录入各个字段信息进行保存
+        questionnaire.setIdentity("teacher");
+        questionnaire.setTouchHuBeiDescription("在那里解除了疫区群众，交代清楚");
+        questionnaire.setTouchHuBeiTime(new Date());
+        questionnaire.setSchoolClass("2018软件1班");
+        questionnaire.setArriveWuHan(true);
+        questionnaire.setLeaveHubei(new Date());
         questionnaire.setName("历史");
         questionnaire.setTeacherNumber("123123132");
         questionnaire.setStudentNumber("123132132");

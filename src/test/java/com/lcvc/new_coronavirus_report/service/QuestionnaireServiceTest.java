@@ -22,10 +22,12 @@ public class QuestionnaireServiceTest {
         //创建对象
         Questionnaire questionnaire=new Questionnaire();
         //根据业务逻辑一个一个字段进行验证
-
         //录入各个字段信息进行保存
+        questionnaire.setIdentity("teacher");
+        questionnaire.setTeacherNumber("123123");
+
         questionnaire.setName("历史");
-        questionnaire.setTeacherNumber("123123132");
+        /*questionnaire.setTeacherNumber("123123132");
         questionnaire.setStudentNumber("123132132");
         questionnaire.setSex("男");
         questionnaire.setRegisteredPlace("五星街");
@@ -48,7 +50,7 @@ public class QuestionnaireServiceTest {
         questionnaire.setMyfamilyHealth("健康");
         questionnaire.setMyHealth("健康");
         questionnaire.setIntro("wuwuw");
-        questionnaire.setIp("123.1.1");
+        questionnaire.setIp("123.1.1");*/
         questionnaireService.save(questionnaire);//保存后去数据库检查相关字段是否有值
         //questionnaireDao.save(questionnaire);//保存后去数据库检查相关字段是否有值
     }

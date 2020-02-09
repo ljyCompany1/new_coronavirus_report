@@ -33,7 +33,7 @@ public class QuestionnaireService {
     @Autowired
     private QuestionnaireDao questionnaireDao;
     /**
-     * 保存表格
+     * 保存表单
      */
     public void save(@NotNull Questionnaire questionnaire){
         //验证教工号或学号，并赋予相应信息
@@ -46,9 +46,11 @@ public class QuestionnaireService {
                 if(questionnaireDao.getQuestionnaireNumberByTeacherToday(teacher.getTeacherNumber())>0){
                     throw new MyServiceException("提交失败：今天已经提交过调查表，请明天再来");
                 }
+                if(StringUtils.isEmpty(questionnaire.getIdentity())){//如果身份证没有填，则从数据库里面读取。
+                    questionnaire.setIdentityCard(teacher.getIdentityCard());//获取身份证
+                }
                 questionnaire.setName(teacher.getName());//获取姓名
                 questionnaire.setSex(teacher.getSex());//获取性别
-                questionnaire.setIdentityCard(teacher.getIdentityCard());//获取身份证
                 //questionnaire.setTel(teacher.getTel());// 电话号码为了保证准确性，暂时都自己填
             }else{
                 throw new MyWebException("提交失败：该教工号不存在");
@@ -62,9 +64,13 @@ public class QuestionnaireService {
                 if(questionnaireDao.getQuestionnaireNumberByStudentToday(student.getStudentNumber())>0){
                     throw new MyServiceException("提交失败：今天已经提交过调查表，请明天再来");
                 }
+                if(StringUtils.isEmpty(questionnaire.getIdentity())){//如果身份证没有填，则从数据库里面读取。
+                    questionnaire.setIdentityCard(student.getIdentityCard());//获取身份证
+                }
                 questionnaire.setName(student.getName());
                 questionnaire.setSex(student.getSex());
                 questionnaire.setIdentityCard(student.getIdentityCard());
+                questionnaire.setSchoolClass(student.getSchoolClass());//设置班级专业信息
                 //questionnaire.setTel(student.getTel());// 电话号码为了保证准确性，暂时都自己填
             }else{
                 throw new MyWebException("提交失败：该学生号不存在");
@@ -73,6 +79,9 @@ public class QuestionnaireService {
             throw new MyWebException("提交失败：数据异常");
         }
         //对其他字段进行验证
+        if(StringUtils.isEmpty(questionnaire.getIdentity())){//这里如果为空，说明表单没有身份证信息，数据库也没有身份证信息
+            throw new MyWebException("提交失败：请输入身份证号");
+        }
         //常规字段
         if(StringUtils.isEmpty(questionnaire.getMyHealth())){
             throw new MyWebException("提交失败：必须填写本人健康状况");
@@ -108,6 +117,17 @@ public class QuestionnaireService {
                 throw new MyWebException("提交失败：必须填写疫区居住地");
             }
         }
+
+        //如果密切接触过来自或到达过湖北疫区人员情况表
+        if(questionnaire.getTouchHuBeiPerson()){
+            if(questionnaire.getTouchHuBeiTime()==null){
+                throw new MyWebException("提交失败：必须填写疫区居住地");
+            }
+            if(StringUtils.isEmpty(questionnaire.getTouchHuBeiDescription())){
+                throw new MyWebException("提交失败：必须描述和疫区人员密切接触过程");
+            }
+        }
+
 
         //满足任何一个需要上报条件的（湖北来的人，去过湖北，接触过疫区）
         if(questionnaire.getComefromHuBei()||questionnaire.getComefromWuHan()||questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()||questionnaire.getTouchHuBeiPerson()){//如果去过武汉湖北
