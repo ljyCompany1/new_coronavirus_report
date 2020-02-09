@@ -20,7 +20,7 @@ public class QuestionnaireDaoTest {
         Questionnaire questionnaire=new Questionnaire();
         //录入各个字段信息进行保存
 
-        questionnaireDao.save(questionnaire);//保存后去数据库检查相关字段是否有值
+        //questionnaireDao.save(questionnaire);//保存后去数据库检查相关字段是否有值
     }
 
 }
