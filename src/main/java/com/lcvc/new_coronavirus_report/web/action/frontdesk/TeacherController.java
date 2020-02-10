@@ -1,4 +1,4 @@
-package com.lcvc.new_coronavirus_report.web.action.backstage;
+package com.lcvc.new_coronavirus_report.web.action.frontdesk;
 
 import com.lcvc.new_coronavirus_report.model.Questionnaire;
 import com.lcvc.new_coronavirus_report.model.Teacher;
@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@RestController(value = "/api/backstage/teacher")
+@RestController
+@RequestMapping(value = "/api/frontdesk/teacher")
 public class TeacherController {
 
     @Autowired

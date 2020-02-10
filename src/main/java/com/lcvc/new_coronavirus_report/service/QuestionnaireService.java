@@ -1,13 +1,11 @@
 package com.lcvc.new_coronavirus_report.service;
 
-import com.lcvc.new_coronavirus_report.dao.QuestionnaireDao;
-import com.lcvc.new_coronavirus_report.dao.StudentDao;
-import com.lcvc.new_coronavirus_report.dao.TeacherDao;
-import com.lcvc.new_coronavirus_report.model.Questionnaire;
-import com.lcvc.new_coronavirus_report.model.Student;
-import com.lcvc.new_coronavirus_report.model.Teacher;
+import com.lcvc.new_coronavirus_report.dao.*;
+import com.lcvc.new_coronavirus_report.model.*;
+import com.lcvc.new_coronavirus_report.model.base.PageObject;
 import com.lcvc.new_coronavirus_report.model.exception.MyServiceException;
 import com.lcvc.new_coronavirus_report.model.exception.MyWebException;
+import com.lcvc.new_coronavirus_report.model.query.QuestionnaireQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -32,17 +30,45 @@ public class QuestionnaireService {
     private TeacherDao teacherDao;
     @Autowired
     private QuestionnaireDao questionnaireDao;
+    @Autowired
+    private TeacherQuestionnaireDao teacherQuestionnaireDao;
+    @Autowired
+    private StudentQuestionnaireDao studentQuestionnaireDao;
     /**
-     * 保存表单
+     * 保存填表人的表单
+     *
      */
     public void save(@NotNull Questionnaire questionnaire,String ip){
+        //必备字段验证，怕后续变动，先同意在这里设定，不加spring验证框架
+        if(questionnaire.getIdentity()==null){
+            throw new MyWebException("提交失败：必须填写身份信息");
+        }
+        if(questionnaire.getComefromWuHan()==null){
+            throw new MyWebException("提交失败：必须填写是否来自武汉");
+        }
+        if(questionnaire.getComefromHuBei()==null){
+            throw new MyWebException("提交失败：必须填写是否来自湖北");
+        }
+        if(questionnaire.getArriveWuHan()==null){
+            throw new MyWebException("提交失败：必须填写是否去过武汉");
+        }
+        if(questionnaire.getArriveHuBei()==null){
+            throw new MyWebException("提交失败：必须填写是否去过湖北");
+        }
+        if(questionnaire.getStayInHubei()==null){
+            throw new MyWebException("提交失败：必须填写是否当前还停留在湖北");
+        }
         //设置IP地址
         questionnaire.setIp(ip);
         //验证教工号或学号，并赋予相应信息
         if(questionnaire.getIdentity().equals("teacher")){
+            if(StringUtils.isEmpty(questionnaire.getTeacherNumber())){
+                throw new MyWebException("提交失败：必须填写教工号");
+            }
             if(StringUtils.isEmpty(questionnaire.getWorkType())){
                 throw new MyWebException("提交失败：必须填写教师工作岗位");
             }
+            questionnaire.setTeacherNumber(questionnaire.getTeacherNumber().trim());//清除空格
             Teacher teacher=teacherDao.get(questionnaire.getTeacherNumber());//从教工号读取教师信息
             if(teacher!=null){
                 if(questionnaireDao.getQuestionnaireNumberByTeacherToday(teacher.getTeacherNumber())>0){
@@ -58,9 +84,13 @@ public class QuestionnaireService {
                 throw new MyWebException("提交失败：该教工号不存在");
             }
         }else if(questionnaire.getIdentity().equals("student")){
+            if(StringUtils.isEmpty(questionnaire.getStudentNumber())){
+                throw new MyWebException("提交失败：必须填写学号");
+            }
             if(questionnaire.getPractice()==null){
                 throw new MyWebException("提交失败：必须填写是否在实习");
             }
+            questionnaire.setStudentNumber(questionnaire.getStudentNumber().trim());//清除空格
             Student student=studentDao.get(questionnaire.getStudentNumber());//从学号读取学生信息
             if(student!=null){
                 if(questionnaireDao.getQuestionnaireNumberByStudentToday(student.getStudentNumber())>0){
@@ -107,8 +137,8 @@ public class QuestionnaireService {
                 throw new MyWebException("提交失败：必须填写回柳州的方式：车次/航班/汽车/自驾等");
             }
         }
-        //检查是去过湖北或武汉
-        if(questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()){//如果去过武汉湖北，但可能还没回来，所以一些字段不做限制
+        //检查是去过湖北或武汉,或当前仍旧停留的
+        if(questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()||questionnaire.getStayInHubei()){//如果去过武汉湖北，但可能还没回来，所以一些字段不做限制
             if(questionnaire.getLeaveLiuZhou()==null){
                 throw new MyWebException("提交失败：必须填写离柳时间");
             }
@@ -141,13 +171,49 @@ public class QuestionnaireService {
             }
         }
         //都验证通过了，就保存表单信息
-        questionnaireDao.save(questionnaire);//保存调查表所有信息
+        questionnaireDao.save(questionnaire);//保存调查表所有信息。（重要：后续设计，如果对性能有影响，安全人群将不记录入总表。）
+        //满足任何一个需要上报条件的（湖北来的人，去过湖北，接触过疫区），都要存储到调查表
+        if(questionnaire.getComefromHuBei()||questionnaire.getComefromWuHan()||questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()||questionnaire.getTouchHuBeiPerson()) {//如果去过武汉湖北
+            //备用
+        }
         //保存到日常居家观察健康状况表
         if(questionnaire.getIdentity().equals("teacher")){
             //保存到教师记录表
+            TeacherQuestionnaire teacherQuestionnaire=new TeacherQuestionnaire();
+            teacherQuestionnaire.setName(questionnaire.getName());
+            teacherQuestionnaire.setWorkType(questionnaire.getWorkType());
+            teacherQuestionnaire.setMyHealth(questionnaire.getMyHealth());
+            teacherQuestionnaire.setMyfamilyHealth(questionnaire.getMyfamilyHealth());
+            teacherQuestionnaire.setTouchHuBeiPerson(questionnaire.getTouchHuBeiPerson());
+            teacherQuestionnaire.setConfirmIll(questionnaire.getConfirmIll());
+            teacherQuestionnaire.setIntro(questionnaire.getIntro());
+            teacherQuestionnaire.setIp(questionnaire.getIp());
+            teacherQuestionnaireDao.save(teacherQuestionnaire);
         }else{
             //保存到学生记录表
+            StudentQuestionnaire studentQuestionnaire=new StudentQuestionnaire();
+            studentQuestionnaire.setName(questionnaire.getName());
+            studentQuestionnaire.setMyHealth(questionnaire.getMyHealth());
+            studentQuestionnaire.setMyfamilyHealth(questionnaire.getMyfamilyHealth());
+            studentQuestionnaire.setTouchHuBeiPerson(questionnaire.getTouchHuBeiPerson());
+            studentQuestionnaire.setConfirmIll(questionnaire.getConfirmIll());
+            studentQuestionnaire.setIntro(questionnaire.getIntro());
+            studentQuestionnaire.setIp(questionnaire.getIp());
+            studentQuestionnaireDao.save(studentQuestionnaire);
         }
+        //throw new MyServiceException("测试回滚");
+    }
+
+    /**
+     * 分页查询所有调查表
+     * @param page 当前页面
+     * @param limit  每页最多显示的记录数
+     * @param questionnairequery 查询条件类
+     */
+    public PageObject query(Integer page, Integer limit, QuestionnaireQuery questionnairequery){
+        PageObject pageObject = new PageObject(limit,page,questionnaireDao.querySize(questionnairequery));
+        pageObject.setList(questionnaireDao.query(pageObject.getOffset(),pageObject.getLimit(),questionnairequery));
+        return pageObject;
     }
 
 }

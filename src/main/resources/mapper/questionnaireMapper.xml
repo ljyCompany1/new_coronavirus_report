@@ -34,18 +34,66 @@
         select count(1) from questionnaire
     </select>
 
+    <!--统一查询的条件，方便用于分页等查询，这里提供给query,querySize,readAll调用-->
+    <sql id="queryWhere">
+        <if test="objectQuery!=null">
+            <where>
+                <if test="objectQuery.identity!=null and objectQuery.identity.length()>0">
+                    and identit=#{objectQuery.identity}
+                </if>
+                <if test="objectQuery.touchHuBeiPerson!=null">
+                    and touchHuBeiPerson=#{objectQuery.touchHuBeiPerson}
+                </if>
+                <if test="objectQuery.confirmIll!=null">
+                    and confirmIll=#{objectQuery.confirmIll}
+                </if>
+                <if test="objectQuery.comefromHuBei!=null">
+                    and comefromHuBei=#{objectQuery.comefromHuBei}
+                </if>
+                <if test="objectQuery.comefromWuHan!=null">
+                    and comefromWuHan=#{objectQuery.comefromWuHan}
+                </if>
+                <if test="objectQuery.arriveHuBei!=null">
+                    and arriveHuBei=#{objectQuery.arriveHuBei}
+                </if>
+                <if test="objectQuery.arriveWuHan!=null">
+                    and arriveWuHan=#{objectQuery.arriveWuHan}
+                </if>
+                <if test="objectQuery.stayInHubei!=null">
+                    and stayInHubei=#{objectQuery.stayInHubei}
+                </if>
+                <if test="objectQuery.arriveHuBeiOrWuHanQuery!=null">
+                    and arriveHuBei=#{objectQuery.arriveHuBeiOrWuHanQuery} OR arriveWuHan=#{objectQuery.arriveHuBeiOrWuHanQuery}
+                </if>
+                <if test="objectQuery.studentQuery!=null and objectQuery.studentQuery==true">
+                    and ( studentNumber!='' or studentNumber!=null)
+                </if>
+                <if test="objectQuery.teacherQuery!=null and objectQuery.teacherQuery==true">
+                    and ( teacherNumber!='' or teacherNumber!=null)
+                </if>
+                <if test="objectQuery.queryDate!=null">
+                    and to_days(#{objectQuery.queryDate})=to_days(createTime)
+                </if>
+            </where>
+        </if>
+    </sql>
+
     <select id="readAll" resultType="Questionnaire">
-        select * from questionnaire order by id asc
+        select * from questionnaire
+        <include refid="queryWhere"></include>
+        order by createTime desc
     </select>
 
 
     <select id="query" resultType="Questionnaire">
-        select questionnaire.* from questionnaire
-        order by questionnaire.id desc limit #{offset},#{length}
+        select * from questionnaire
+        <include refid="queryWhere"></include>
+        order by createTime desc limit #{offset},#{length}
     </select>
 
     <select id="querySize" resultType="Integer">
-        select count(1) from questionnaire
+        select count(1)  from questionnaire
+        <include refid="queryWhere"></include>
     </select>
 
 

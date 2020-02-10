@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 指明这个映射文件adminMapper.xml的逻辑路径,如果与接口建立映射，那么逻辑路径应该与接口的物理路径一致-->
+<mapper namespace="com.lcvc.new_coronavirus_report.dao.DailyReportDao">
+    <!--==================================基本查询============================-->
+    <select id="get"  resultType="DailyReport">
+        select * from daily_report where id=#{id}
+    </select>
+
+    <insert id="save"  useGeneratedKeys="true" keyProperty="id">
+      insert into daily_report(id,comefromWuHanNumber,comefromHuBeiNumber,arriveHuBeiNumber,arriveWuHanNumber,touchHuBeiPersonNumber,stayInHubeiNumber,reportDate)
+      values(null,#{comefromWuHanNumber},#{comefromHuBeiNumber},#{arriveHuBeiNumber},#{arriveWuHanNumber},#{touchHuBeiPersonNumber},#{stayInHubeiNumber},#{reportDate})
+</insert>
+
+    <delete id="deleteObjects" >
+        delete from daily_report where id in
+        <foreach item="item" collection="collection" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </delete>
+
+
+
+    <select id="total"  resultType="Integer">
+        select count(1) from daily_report
+    </select>
+
+    <!--统一查询的条件，方便用于分页等查询，这里提供给query,querySize,readAll调用-->
+    <sql id="queryWhere">
+        <if test="objectQuery!=null">
+            <where>
+                <if test="objectQuery.reportDate!=null">
+                    and to_days(#{objectQuery.reportDate})=to_days(reportDate)
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <select id="readAll" resultType="DailyReport">
+        select * from daily_report
+        <include refid="queryWhere"></include>
+        order by reportDate desc
+    </select>
+
+
+</mapper>

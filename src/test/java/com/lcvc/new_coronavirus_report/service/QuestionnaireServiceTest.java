@@ -1,6 +1,5 @@
 package com.lcvc.new_coronavirus_report.service;
 
-import com.lcvc.new_coronavirus_report.dao.QuestionnaireDao;
 import com.lcvc.new_coronavirus_report.model.Questionnaire;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +21,11 @@ public class QuestionnaireServiceTest {
         Questionnaire questionnaire=new Questionnaire();
         //根据业务逻辑一个一个字段进行验证
         //录入各个字段信息进行保存
-        questionnaire.setIdentity("student");
-        questionnaire.setStudentNumber("174013097");
+        questionnaire.setStayInHubei(true);
+        questionnaire.setIdentity("teacher");
+        questionnaire.setTeacherNumber("2007010006");
         questionnaire.setName("历史");
-        questionnaire.setWorkType("软件技术");
+        questionnaire.setWorkType("专任教师");
         questionnaire.setMyHealth("健康");
         questionnaire.setTouchHuBeiPerson(true);
         questionnaire.setEpidemicArea("武汉不知道那里");

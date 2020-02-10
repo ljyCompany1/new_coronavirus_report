@@ -23,8 +23,8 @@ spring:
   #jdbc配置，springboot默认会把spring.datasource开头的信息收纳，进行DataSource对象的配置，进而进行sqlSessionFactory的配置等相关数据库连接的配置，从而省略了application.xml中的相关
   datasource:
       url: jdbc:mysql://localhost:3306/new_coronavirus_report?characterEncoding=utf-8&serverTimezone=CTT
-      username: user
-      password: 123456
+      username: lcvc
+      password: lcvc123456
       driverClassName: com.mysql.cj.jdbc.Driver
   jackson:    #设置全局json格式
     date-format: yyyy-MM-dd HH:mm:ss   #将日期类型设置为字符串表示
@@ -37,6 +37,8 @@ spring:
       maxFileSize: 100MB #单个上传文件的最大限制
       maxRequestSize: 100MB  #所有上传文件的最大限制
 #控制台打印sql语句
-#logging:
-#  level:
-#    com.lcvc.ebuy_springboot.dao: DEBUG
+logging:
+  file: target/log/new_coronavirus_report.log
+  level:
+    com.lcvc.new_coronavirus_report: error
+    org.springframework: error

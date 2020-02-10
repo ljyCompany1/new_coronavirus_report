@@ -1,5 +1,6 @@
 package com.lcvc.new_coronavirus_report.dao;
 
+import com.lcvc.new_coronavirus_report.model.DailyReport;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
@@ -55,6 +56,12 @@ public interface IBaseDao<T>{
 	 * @return  删除的记录数，>=1表示删除成功，0表示删除失败
 	 */
 	int deletes(java.io.Serializable[] ids);
+
+	/**
+	 *批量删除集合对象
+	 * @param collection
+	 */
+	void deleteObjects(@Param(value = "collection")Collection<DailyReport> collection);
 	
 	/**
 	 * 获取表中符合条件的所有记录

@@ -1,4 +1,4 @@
-package com.lcvc.new_coronavirus_report.web.action.backstage;
+package com.lcvc.new_coronavirus_report.web.action.frontdesk;
 
 import com.lcvc.new_coronavirus_report.model.Questionnaire;
 import com.lcvc.new_coronavirus_report.model.base.Constant;
@@ -7,6 +7,7 @@ import com.lcvc.new_coronavirus_report.service.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@RestController(value = "/api/backstage/questionnaire")
+@RestController
+@RequestMapping(value = "/api/frontdesk/questionnaire")
 public class QuestionnaireController {
 
     @Autowired

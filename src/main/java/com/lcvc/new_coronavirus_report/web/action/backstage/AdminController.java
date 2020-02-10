@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@RestController(value = "/api/backstage")
+@RestController
+@RequestMapping(value = "/api/backstage")
 public class AdminController {
 
     @Autowired
