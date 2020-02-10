@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping(value = "/api/frontdesk/query")
+@RequestMapping(value = "/api/backstage/query")
 public class QuestionnaireQueryController {
 
     @Autowired
