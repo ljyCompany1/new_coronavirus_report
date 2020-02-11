@@ -1,33 +1,25 @@
 package com.lcvc.new_coronavirus_report.web.action.backstage;
 
 import com.lcvc.new_coronavirus_report.model.Questionnaire;
-import com.lcvc.new_coronavirus_report.model.base.Constant;
-import com.lcvc.new_coronavirus_report.model.base.JsonCode;
-import com.lcvc.new_coronavirus_report.model.base.PageObject;
 import com.lcvc.new_coronavirus_report.model.form.DailyReportTable;
 import com.lcvc.new_coronavirus_report.model.query.QuestionnaireQuery;
 import com.lcvc.new_coronavirus_report.service.DailyReportService;
 import com.lcvc.new_coronavirus_report.service.QuestionnaireService;
-import com.lcvc.new_coronavirus_report.util.poi.ExcelWirteForSecondTable;
-import com.lcvc.new_coronavirus_report.util.poi.ExcelWirteForfirstTable;
+import com.lcvc.new_coronavirus_report.util.poi.ExcelWirteForSecondSheet;
+import com.lcvc.new_coronavirus_report.util.poi.ExcelWirteForTable;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 专门处理9个表的内容，并将其用excel导出
@@ -89,7 +81,7 @@ public class QuestionnaireExcelController {
         //questionnairequery.setComefromWuHan(true);//查询来自武汉的记录
         List<Questionnaire> list=questionnaireService.query(questionnairequery);//获取数据记录
         //导出表格
-        XSSFWorkbook book=ExcelWirteForSecondTable.getExcel(list);//根据记录，生成excel表格
+        XSSFWorkbook book= ExcelWirteForTable.getExcel2(list);//根据记录，生成excel表格
         //创建文件对象，导出
         this.outExcelStream(response,book,"柳州市重点人群排查工作相关表格1.1");
         return "SUCCESS";//这里其实就是随意返回一个字符串

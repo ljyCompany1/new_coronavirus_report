@@ -12,30 +12,15 @@ import java.util.List;
  * 处理1-2表
  */
 @Service
-public class ExcelWirteForSecondTable {
-
-
-    /**
-     * 将数据导出
-     * @param list 要遍历的数据集合
-     */
-    public static XSSFWorkbook getExcel(List<Questionnaire> list) {
-        // 创建工作簿
-        XSSFWorkbook book = new XSSFWorkbook();
-        // 创建工作表1
-        getShee1(book,list);
-        //创建工作表2——班级列表
-        //getSheetOfSchoolClass(book,schoolClassList);
-        return book;
-    }
+public class ExcelWirteForSecondSheet {
 
     /**
-     * 创建第一个工作表，方便扩展（如果后续需要工作表合并，会容易很多）
+     * 创建一个工作表，方便扩展（如果后续需要工作表合并，会容易很多）
      * @param book 传递进来的工作部对象
      * @param list 要遍历的数据集合
      * @return
      */
-    private static XSSFSheet getShee1(XSSFWorkbook book, List<Questionnaire> list){
+    public static XSSFSheet getShee1(XSSFWorkbook book, List<Questionnaire> list){
         // 创建工作表
         XSSFSheet sheet = book.createSheet("1.1");
         //在索引0的位置创建行（最顶端的行）
