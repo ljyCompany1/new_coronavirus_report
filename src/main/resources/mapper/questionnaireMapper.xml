@@ -9,11 +9,11 @@
 
     <insert id="save"  useGeneratedKeys="true" keyProperty="id">
       insert into questionnaire(id,identity,teacherNumber,studentNumber,sex,name,registeredPlace,
-      identityCard,tel,workType,practice,comefromHuBei,comefromWuHan,arriveHuBei,arriveWuHan,epidemicArea,
+      identityCard,tel,workType,practice,practiceWorkStatus,comefromHuBei,comefromWuHan,arriveHuBei,arriveWuHan,epidemicArea,
       addressInLiuZhou,arriveLiuZhou,leaveLiuZhou,leaveHubei,leaveHubeiWay,leaveTogetherPersonName,
       manageMethods,touchHuBeiPerson,touchHuBeiTime,touchHuBeiDescription,schoolClass,myHealth,myfamilyHealth,intro,ip,createTime)
       values(null,#{identity},#{teacherNumber},#{studentNumber},#{sex},#{name},#{registeredPlace},
-      #{identityCard},#{tel},#{workType},#{practice},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{arriveWuHan},#{epidemicArea},
+      #{identityCard},#{tel},#{workType},#{practice},#{practiceWorkStatus},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{arriveWuHan},#{epidemicArea},
       #{addressInLiuZhou},#{arriveLiuZhou},#{leaveLiuZhou},#{leaveHubei},#{leaveHubeiWay},#{leaveTogetherPersonName},
       #{manageMethods},#{touchHuBeiPerson},#{touchHuBeiTime},#{touchHuBeiDescription},#{schoolClass},#{myHealth},#{myfamilyHealth},#{intro},#{ip},now())
 </insert>
@@ -40,6 +40,12 @@
             <where>
                 <if test="objectQuery.identity!=null and objectQuery.identity.length()>0">
                     and identit=#{objectQuery.identity}
+                </if>
+                <if test="objectQuery.practice!=null">
+                    and practice=#{objectQuery.practice}
+                </if>
+                <if test="objectQuery.practiceWorkStatus!=null and objectQuery.practiceWorkStatus.length()>0">
+                    and practiceWorkStatus=#{objectQuery.practiceWorkStatus}
                 </if>
                 <if test="objectQuery.touchHuBeiPerson!=null">
                     and touchHuBeiPerson=#{objectQuery.touchHuBeiPerson}

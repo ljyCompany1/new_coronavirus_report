@@ -17,6 +17,7 @@ public class Questionnaire {
     private String tel;//手机号，为保证准确性，依旧采用人工录入
     private String workType;//教师：岗位或所授学科.工作岗位
     private Boolean practice;//学生：是否正在实习。true表示有，false表示没有。
+    private String practiceWorkStatus;//请选择您当前的实习情况：'在家休息','在宿舍休息','在家远程上班','在单位上班'。只有选择了正在实习才要求填
     private String identityCard;//身份证号。前端运行，建议先读取该教师/学生的信息，如果有身份证号则直接加载到身份证表单里。
 
     //表单取消下面字段填写，由数据库直接获取
@@ -338,5 +339,13 @@ public class Questionnaire {
 
     public void setStayInHubei(Boolean stayInHubei) {
         this.stayInHubei = stayInHubei;
+    }
+
+    public String getPracticeWorkStatus() {
+        return practiceWorkStatus;
+    }
+
+    public void setPracticeWorkStatus(String practiceWorkStatus) {
+        this.practiceWorkStatus = practiceWorkStatus;
     }
 }

@@ -74,7 +74,12 @@ public class QuestionnaireService {
                 throw new MyWebException("提交失败：必须填写学号");
             }
             if(questionnaire.getPractice()==null){
-                throw new MyWebException("提交失败：必须填写是否在实习");
+                throw new MyWebException("提交失败：必须填写您是否正在参加顶岗实习（实习生）");
+            }
+            if(questionnaire.getPractice()==true){//如果选择了正在实习
+                if(StringUtils.isEmpty(questionnaire.getPracticeWorkStatus())){//如果没有选择实习状态
+                    throw new MyWebException("提交失败：实习学生必须填写今天的实习情况");
+                }
             }
             questionnaire.setStudentNumber(questionnaire.getStudentNumber().trim());//清除空格
             Student student=studentDao.get(questionnaire.getStudentNumber());//从学号读取学生信息

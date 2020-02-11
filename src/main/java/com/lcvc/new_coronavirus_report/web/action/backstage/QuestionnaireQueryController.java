@@ -148,4 +148,19 @@ public class QuestionnaireQueryController {
         return map;
     }
 
+    //获取今天的学生在公司上班的记录的内容
+    @GetMapping("/practiceWork")
+    public Map<String, Object> getPracticeTable(Integer page, Integer limit){
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
+        QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
+        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery.setPractice(true);//正在实习
+        questionnairequery.setPracticeWorkStatus("在单位上班");//统计在上班的
+        PageObject pageObject =questionnaireService.query(page,limit,questionnairequery);
+        map.put(Constant.JSON_TOTAL,pageObject.getTotalRecords());
+        map.put(Constant.JSON_DATA,pageObject.getList());
+        return map;
+    }
+
 }
