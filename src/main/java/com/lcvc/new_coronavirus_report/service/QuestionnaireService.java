@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 负责处理调查表信息
@@ -39,27 +40,12 @@ public class QuestionnaireService {
      *
      */
     public void save(@NotNull Questionnaire questionnaire,String ip){
-        //必备字段验证，怕后续变动，先同意在这里设定，不加spring验证框架
+        //设置IP地址
+        questionnaire.setIp(ip);
+        //必备字段验证，不加spring验证框架
         if(questionnaire.getIdentity()==null){
             throw new MyWebException("提交失败：必须填写身份信息");
         }
-        if(questionnaire.getComefromWuHan()==null){
-            throw new MyWebException("提交失败：必须填写是否来自武汉");
-        }
-        if(questionnaire.getComefromHuBei()==null){
-            throw new MyWebException("提交失败：必须填写是否来自湖北");
-        }
-        if(questionnaire.getArriveWuHan()==null){
-            throw new MyWebException("提交失败：必须填写是否去过武汉");
-        }
-        if(questionnaire.getArriveHuBei()==null){
-            throw new MyWebException("提交失败：必须填写是否去过湖北");
-        }
-        if(questionnaire.getStayInHubei()==null){
-            throw new MyWebException("提交失败：必须填写是否当前还停留在湖北");
-        }
-        //设置IP地址
-        questionnaire.setIp(ip);
         //验证教工号或学号，并赋予相应信息
         if(questionnaire.getIdentity().equals("teacher")){
             if(StringUtils.isEmpty(questionnaire.getTeacherNumber())){
@@ -110,15 +96,21 @@ public class QuestionnaireService {
         }else{
             throw new MyWebException("提交失败：数据异常");
         }
+        //基础字段验证，不加spring验证框架
         //对其他字段进行验证
         if(StringUtils.isEmpty(questionnaire.getIdentity())){//这里如果为空，说明表单没有身份证信息，数据库也没有身份证信息
             throw new MyWebException("提交失败：请输入身份证号");
         }
+        //对其他字段进行验证
+        if(StringUtils.isEmpty(questionnaire.getTel())){//这里如果为空，说明表单没有身份证信息，数据库也没有身份证信息
+            throw new MyWebException("提交失败：请输入电话号码");
+        }
+
         //常规字段
         if(StringUtils.isEmpty(questionnaire.getMyHealth())){
             throw new MyWebException("提交失败：必须填写本人健康状况");
         }
-        if(StringUtils.isEmpty(questionnaire.getMyHealth())){
+        if(StringUtils.isEmpty(questionnaire.getMyfamilyHealth())){
             throw new MyWebException("提交失败：必须填写本人家庭成员的健康状况");
         }
         if(questionnaire.getTouchHuBeiPerson()==null){
@@ -127,6 +119,21 @@ public class QuestionnaireService {
         if(questionnaire.getConfirmIll()==null){
             throw new MyWebException("提交失败：必须填写是否为疑似病例或确诊病例");
         }
+
+        //必备字段验证，不加spring验证框架
+        if(questionnaire.getComefromWuHan()==null){
+            throw new MyWebException("提交失败：必须填写是否来自武汉");
+        }
+        if(questionnaire.getComefromHuBei()==null){
+            throw new MyWebException("提交失败：必须填写是否来自湖北");
+        }
+        if(questionnaire.getArriveWuHan()==null){
+            throw new MyWebException("提交失败：必须填写是否去过武汉");
+        }
+        if(questionnaire.getArriveHuBei()==null){
+            throw new MyWebException("提交失败：必须填写是否去过湖北");
+        }
+
 
         //如果来自武汉湖北的市外人员
         if(questionnaire.getComefromHuBei()||questionnaire.getComefromWuHan()){
@@ -138,7 +145,10 @@ public class QuestionnaireService {
             }
         }
         //检查是去过湖北或武汉,或当前仍旧停留的
-        if(questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()||questionnaire.getStayInHubei()){//如果去过武汉湖北，但可能还没回来，所以一些字段不做限制
+        if(questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()){//如果去过武汉湖北，但可能还没回来，所以一些字段不做限制
+            if(questionnaire.getStayInHubei()==null){
+                throw new MyWebException("提交失败：必须填写是否当前还停留在湖北");
+            }
             if(questionnaire.getLeaveLiuZhou()==null){
                 throw new MyWebException("提交失败：必须填写离柳时间");
             }
@@ -214,6 +224,14 @@ public class QuestionnaireService {
         PageObject pageObject = new PageObject(limit,page,questionnaireDao.querySize(questionnairequery));
         pageObject.setList(questionnaireDao.query(pageObject.getOffset(),pageObject.getLimit(),questionnairequery));
         return pageObject;
+    }
+
+    /**
+     * 查询所有调查表
+     * @param questionnairequery 查询条件类
+     */
+    public List<Questionnaire> query(QuestionnaireQuery questionnairequery){
+        return questionnaireDao.readAll(questionnairequery);
     }
 
 }

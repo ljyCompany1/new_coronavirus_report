@@ -20,9 +20,9 @@ public class AutomationSchedule {
 
     /**
      * 统计昨天的重点人群排查管理日报表，存入数据库
-     * 设计为每天上午5点10分执行自动购买
+     * 设计为每天上午12点30分执行管理统计存储
      */
-    @Scheduled(cron = "0 34 15 ? * *")
+    @Scheduled(cron = "0 30 00 ? * *")
     public void saveDailyReportYesterday(){
         Date yesterday= MyDateUtil.getDateBefore(new Date(),1);//获取昨天的日期
         dailyReportService.saveDailyReportInOneDay(yesterday);//保存昨天的日志表

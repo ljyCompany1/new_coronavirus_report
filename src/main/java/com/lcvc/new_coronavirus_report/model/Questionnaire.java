@@ -1,5 +1,7 @@
 package com.lcvc.new_coronavirus_report.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -29,6 +31,7 @@ public class Questionnaire {
     private Boolean confirmIll;//是否为疑似病例或确诊病例。两个选项：医院已确诊；否，身体健康。true表示有，false表示没有。
 
     //如果密切接触过疫区人员要填的字段
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date touchHuBeiTime;//密切接触的时间。接触过疫区人员，都要填；否则为空
     private String touchHuBeiDescription;//密切接触过程的具体描述。接触过疫区人员，都要填；否则为空
     private String schoolClass;//年级班级（专业）。接触过疫区人员，都要填；否则为空。取消表单该字段，
@@ -40,12 +43,15 @@ public class Questionnaire {
     private Boolean arriveWuHan;//1月16日后，是否到过武汉。true表示是，false表示不是
     private Boolean stayInHubei;//现在是否仍在湖北出差、休假、旅游、探亲等短时停留
     private String epidemicArea;//疫区居住地。只要去过湖北或武汉，或是来自湖北或武汉,接触过疫区人员，都要填；否则为空
-    private String addressInLiuZhou;//柳州居住地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
+    private String addressInLiuZhou;//柳州居住地。只要去过湖北或武汉，或是来自湖北或武汉，接触过疫区人员，都要填；否则为空
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date arriveLiuZhou;//到达柳州的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date leaveLiuZhou;//离开柳州的时间。包括武汉。只要去过湖北或武汉都要填；否则为空
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date leaveHubei;//离开湖北的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
     private String leaveHubeiWay;//离开湖北的方式。提示用户填（用文本框）：车次/航班/汽车/自驾。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
-    private String  leaveTogetherPersonName;//离开时同行的人姓名，可以多写。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
+    private String leaveTogetherPersonName;//离开时同行的人姓名，可以多写。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
     private String manageMethods;//管控措施（如为居家隔离，请询问是否有社区每日随访、是否有外出买菜、下楼活动等情况）。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
     private String registeredPlace;//户口所在地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
 
