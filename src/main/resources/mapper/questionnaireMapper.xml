@@ -9,11 +9,11 @@
 
     <insert id="save"  useGeneratedKeys="true" keyProperty="id">
       insert into questionnaire(id,identity,teacherNumber,studentNumber,sex,name,registeredPlace,
-      identityCard,tel,workType,practice,practiceWorkStatus,comefromHuBei,comefromWuHan,arriveHuBei,arriveWuHan,epidemicArea,
+      identityCard,tel,workType,practice,practiceWorkStatus,comefromHuBei,comefromWuHan,arriveHuBei,arriveWuHan,stayInHubei,epidemicArea,
       addressInLiuZhou,arriveLiuZhou,leaveLiuZhou,leaveHubei,leaveHubeiWay,leaveTogetherPersonName,
       manageMethods,touchHuBeiPerson,touchHuBeiTime,touchHuBeiDescription,schoolClass,myHealth,myfamilyHealth,intro,ip,createTime)
       values(null,#{identity},#{teacherNumber},#{studentNumber},#{sex},#{name},#{registeredPlace},
-      #{identityCard},#{tel},#{workType},#{practice},#{practiceWorkStatus},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{arriveWuHan},#{epidemicArea},
+      #{identityCard},#{tel},#{workType},#{practice},#{practiceWorkStatus},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{arriveWuHan},#{stayInHubei},#{epidemicArea},
       #{addressInLiuZhou},#{arriveLiuZhou},#{leaveLiuZhou},#{leaveHubei},#{leaveHubeiWay},#{leaveTogetherPersonName},
       #{manageMethods},#{touchHuBeiPerson},#{touchHuBeiTime},#{touchHuBeiDescription},#{schoolClass},#{myHealth},#{myfamilyHealth},#{intro},#{ip},now())
 </insert>

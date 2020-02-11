@@ -2,34 +2,32 @@ package com.lcvc.new_coronavirus_report.util.poi;
 
 
 import com.lcvc.new_coronavirus_report.model.Questionnaire;
-import com.lcvc.new_coronavirus_report.model.form.DailyReportTable;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 
 @Service
-public class ExcelWirteForSecondSheet {
+public class ExcelWirteForFourthSheet {
 
     /**
-     * 1.2来自武汉市的市外人员排查日报表（一）
+     * 1.4我市到过武汉市的人员排查日报表（三）
      *
      * @param book 传递进来的工作部对象
      * @param list 要遍历的数据集合
      * @return
      */
-    public static XSSFSheet getShee2(XSSFWorkbook book,  List<Questionnaire> list) {
-        String header[]={"来自武汉市的市外人员排查日报表（一）"};
+    public static XSSFSheet getShee4(XSSFWorkbook book,List<Questionnaire> list) {
+        String header[]={"我市到过武汉市的人员排查日报表（三）"};
         String title[]={"序号","姓名","身份证号","联系电话","户口住址","电话排查内容","入户排查内容","管控措施（如为居家隔离，请询问是否有社区每日随访、是否有外出买菜、下楼活动等情况）","备注"};
         String title1[]={"离开湖北省的时间","目前在柳居住地","是否有咳嗽、胸闷、发烧等不适症状","离开湖北省的时间","到柳时间","目前在柳居住地","是否有咳嗽、胸闷、发烧等不适症状","车次/航班/汽车/自驾等回柳方式","同行人姓名"};
 
         // 创建一个工作表
-        XSSFSheet sheet = book.createSheet("1.2");
+        XSSFSheet sheet = book.createSheet("1.3");
 
 
         // 设置单元格表单头部样式
@@ -71,7 +69,7 @@ public class ExcelWirteForSecondSheet {
         title1Style.setWrapText(true);//自动换行
 
         XSSFCellStyle bgcolorStyle = book.createCellStyle();
-        bgcolorStyle.setFillForegroundColor(IndexedColors.YELLOW1.getIndex());
+        bgcolorStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
         bgcolorStyle.setFillPattern(FillPatternType.BIG_SPOTS);
         bgcolorStyle.setFont(titlefont);
         bgcolorStyle.setBorderBottom(BorderStyle.THIN);
@@ -211,6 +209,7 @@ public class ExcelWirteForSecondSheet {
             intoLeaveHubei.setCellStyle(titleStyle);
 
             XSSFCell intoArriveLiuZhou= listRow.createCell(9);
+            intoArriveLiuZhou.setCellValue(list.get(i).getArriveLiuZhou());
             if (list.get(i).getArriveLiuZhou()!=null){
                 SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 intoArriveLiuZhou.setCellValue(formatter.format(list.get(i).getArriveLiuZhou()));
