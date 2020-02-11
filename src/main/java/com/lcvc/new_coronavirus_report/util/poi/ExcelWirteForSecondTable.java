@@ -14,34 +14,6 @@ import java.util.List;
 @Service
 public class ExcelWirteForSecondTable {
 
-    /**
-     * 将数据导出
-     * @param output 输出
-     * @param list 要遍历的数据集合
-     */
-    public static void writeExcel(ByteArrayOutputStream output, List<Questionnaire> list) {
-        // 创建工作簿
-        XSSFWorkbook book = new XSSFWorkbook();
-        // 创建工作表1
-        getShee1(book,list);
-        //创建工作表2——班级列表
-        //getSheetOfSchoolClass(book,schoolClassList);
-        try {
-            book.write(output);
-        }  catch (IOException e) {
-            e.printStackTrace();
-        } finally{
-            try {
-                output.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }finally{
-                output=null;
-            }
-        }
-    }
-
 
     /**
      * 将数据导出

@@ -1,131 +1,189 @@
 /*
- Navicat Premium Data Transfer
+Navicat MySQL Data Transfer
 
- Source Server         : local
- Source Server Type    : MySQL
- Source Server Version : 80016
- Source Host           : localhost:3306
- Source Schema         : new_coronavirus_report
+Source Server         : localhost_3306
+Source Server Version : 80012
+Source Host           : localhost:3306
+Source Database       : new_coronavirus_report
 
- Target Server Type    : MySQL
- Target Server Version : 80016
- File Encoding         : 65001
+Target Server Type    : MYSQL
+Target Server Version : 80012
+File Encoding         : 65001
 
- Date: 10/02/2020 15:35:41
+Date: 2020-02-11 09:40:10
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for admin
+-- Table structure for `admin`
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin`  (
+CREATE TABLE `admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `createTime` datetime(0) NULL DEFAULT NULL,
+  `username` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `createTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, 'admin', 'b294pcjitlvg48j6idhhaok94bcook2m', '管理员', NULL);
+INSERT INTO `admin` VALUES ('1', 'admin', 'b294pcjitlvg48j6idhhaok94bcook2m', '管理员', null);
 
 -- ----------------------------
--- Table structure for daily_report
+-- Table structure for `daily_report`
 -- ----------------------------
 DROP TABLE IF EXISTS `daily_report`;
-CREATE TABLE `daily_report`  (
+CREATE TABLE `daily_report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `comefromWuHanNumber` int(11) NULL DEFAULT NULL,
-  `comefromHuBeiNumber` int(11) NULL DEFAULT NULL,
-  `arriveHuBeiNumber` int(11) NULL DEFAULT NULL,
-  `arriveWuHanNumber` int(255) NULL DEFAULT NULL,
-  `touchHuBeiPersonNumber` int(11) NULL DEFAULT NULL,
-  `stayInHubeiNumber` int(11) NULL DEFAULT NULL,
-  `reportDate` date NULL DEFAULT NULL,
+  `comefromWuHanNumber` int(11) DEFAULT NULL,
+  `comefromHuBeiNumber` int(11) DEFAULT NULL,
+  `arriveHuBeiNumber` int(11) DEFAULT NULL,
+  `arriveWuHanNumber` int(255) DEFAULT NULL,
+  `touchHuBeiPersonNumber` int(11) DEFAULT NULL,
+  `stayInHubeiNumber` int(11) DEFAULT NULL,
+  `reportDate` date DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of daily_report
 -- ----------------------------
-INSERT INTO `daily_report` VALUES (13, 7, 7, 6, 6, 6, 0, '2020-02-10');
-INSERT INTO `daily_report` VALUES (14, 0, 0, 0, 0, 0, 0, '2020-02-09');
+INSERT INTO `daily_report` VALUES ('14', '0', '0', '0', '0', '0', '0', '2020-02-09');
+INSERT INTO `daily_report` VALUES ('15', '10', '10', '10', '10', '11', '3', '2020-02-10');
 
 -- ----------------------------
--- Table structure for questionnaire
+-- Table structure for `questionnaire`
 -- ----------------------------
 DROP TABLE IF EXISTS `questionnaire`;
-CREATE TABLE `questionnaire`  (
+CREATE TABLE `questionnaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `identity` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '//填表人身份。\"teacher\"表示教师；\"student\"表示学生',
-  `teacherNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师工号',
-  `studentNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生学号',
-  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号码',
-  `workType` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '教师：工作岗位',
-  `practice` tinyint(1) NULL DEFAULT NULL COMMENT '学生：是否正在实习。true表示有，false表示没有。',
-  `sex` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别，男或女',
-  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证号',
-  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
-  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
-  `touchHuBeiPerson` bit(1) NULL DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
-  `touchHuBeiTime` datetime(6) NULL DEFAULT NULL COMMENT '密切接触的时间。接触过疫区人员，都要填；否则为空',
-  `touchHuBeiDescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密切接触过程的具体描述。接触过疫区人员，都要填；否则为空',
-  `comefromHuBei` bit(1) NULL DEFAULT NULL COMMENT '是否来自湖北(不包括武汉市)。true表示是，false表示不是',
-  `comefromWuHan` bit(1) NULL DEFAULT NULL COMMENT '是否来自武汉市。true表示是，false表示不是',
-  `arriveHuBei` bit(1) NULL DEFAULT NULL COMMENT '1月16日后，是否去过湖北(不包括武汉市)。true表示是，false表示不是',
-  `arriveWuHan` bit(1) NULL DEFAULT NULL COMMENT '1月16日后，是否到过武汉。true表示是，false表示不是',
-  `stayInHubei` bit(1) NULL DEFAULT NULL COMMENT '现在是否仍在湖北出差、休假、旅游、探亲等短时停留',
-  `epidemicArea` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '疫区居住地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
-  `addressInLiuZhou` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '柳州居住地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
-  `arriveLiuZhou` datetime(6) NULL DEFAULT NULL COMMENT '到达柳州的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
-  `leaveLiuZhou` datetime(6) NULL DEFAULT NULL COMMENT '离开柳州的时间。包括武汉。只要去过湖北或武汉都要填；否则为空',
-  `leaveHubei` datetime(6) NULL DEFAULT NULL COMMENT '离开湖北的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
-  `leaveHubeiWay` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '离开湖北的方式。提示用户填（用文本框）：车次/航班/汽车/自驾。只要去过湖北或武汉，或是来自湖北或武汉，都要填；',
-  `leaveTogetherPersonName` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '离开时同行的人姓名，可以多写。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
-  `manageMethods` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '管控措施（如为居家隔离，请询问是否有社区每日随访、是否有外出买菜、下楼活动等情况）。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
-  `registeredPlace` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '户口所在地',
-  `intro` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其他说明。用于备注字段',
-  `ip` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址，由系统自动填入',
-  `schoolClass` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '年级班级（专业）',
-  `createTime` datetime(6) NULL DEFAULT NULL COMMENT '填表时间，由数据库写入',
+  `identity` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '//填表人身份。"teacher"表示教师；"student"表示学生',
+  `teacherNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '教师工号',
+  `studentNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '学生学号',
+  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '手机号码',
+  `workType` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '教师：工作岗位',
+  `practice` tinyint(1) DEFAULT NULL COMMENT '学生：是否正在实习。true表示有，false表示没有。',
+  `sex` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '性别，男或女',
+  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
+  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '身份证号',
+  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
+  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
+  `touchHuBeiPerson` bit(1) DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
+  `touchHuBeiTime` datetime(6) DEFAULT NULL COMMENT '密切接触的时间。接触过疫区人员，都要填；否则为空',
+  `touchHuBeiDescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密切接触过程的具体描述。接触过疫区人员，都要填；否则为空',
+  `comefromHuBei` bit(1) DEFAULT NULL COMMENT '是否来自湖北(不包括武汉市)。true表示是，false表示不是',
+  `comefromWuHan` bit(1) DEFAULT NULL COMMENT '是否来自武汉市。true表示是，false表示不是',
+  `arriveHuBei` bit(1) DEFAULT NULL COMMENT '1月16日后，是否去过湖北(不包括武汉市)。true表示是，false表示不是',
+  `arriveWuHan` bit(1) DEFAULT NULL COMMENT '1月16日后，是否到过武汉。true表示是，false表示不是',
+  `stayInHubei` bit(1) DEFAULT NULL COMMENT '现在是否仍在湖北出差、休假、旅游、探亲等短时停留',
+  `epidemicArea` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '疫区居住地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
+  `addressInLiuZhou` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '柳州居住地。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
+  `arriveLiuZhou` datetime(6) DEFAULT NULL COMMENT '到达柳州的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
+  `leaveLiuZhou` datetime(6) DEFAULT NULL COMMENT '离开柳州的时间。包括武汉。只要去过湖北或武汉都要填；否则为空',
+  `leaveHubei` datetime(6) DEFAULT NULL COMMENT '离开湖北的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
+  `leaveHubeiWay` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '离开湖北的方式。提示用户填（用文本框）：车次/航班/汽车/自驾。只要去过湖北或武汉，或是来自湖北或武汉，都要填；',
+  `leaveTogetherPersonName` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '离开时同行的人姓名，可以多写。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
+  `manageMethods` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '管控措施（如为居家隔离，请询问是否有社区每日随访、是否有外出买菜、下楼活动等情况）。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空',
+  `registeredPlace` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '户口所在地',
+  `intro` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '其他说明。用于备注字段',
+  `ip` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'ip地址，由系统自动填入',
+  `schoolClass` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '年级班级（专业）',
+  `createTime` datetime(6) DEFAULT NULL COMMENT '填表时间，由数据库写入',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `touchHuBeiPerson`(`touchHuBeiPerson`) USING BTREE,
-  INDEX `comefromHuBei`(`comefromHuBei`) USING BTREE,
-  INDEX `comefromWuHan`(`comefromWuHan`) USING BTREE,
-  INDEX `arriveHuBei`(`arriveHuBei`) USING BTREE,
-  INDEX `arriveWuHan`(`arriveWuHan`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  KEY `touchHuBeiPerson` (`touchHuBeiPerson`) USING BTREE,
+  KEY `comefromHuBei` (`comefromHuBei`) USING BTREE,
+  KEY `comefromWuHan` (`comefromWuHan`) USING BTREE,
+  KEY `arriveHuBei` (`arriveHuBei`) USING BTREE,
+  KEY `arriveWuHan` (`arriveWuHan`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of questionnaire
 -- ----------------------------
-INSERT INTO `questionnaire` VALUES (36, 'teacher', '2006010022', NULL, '17878011321', '专任教师', 1, '男', '黄超', '111112222233333111', '健康', '健康', b'1', '2020-02-10 15:02:15.132000', '就这样', b'1', b'1', b'1', b'1', b'1', '武汉不知道那里', '鱼峰区', '2020-02-10 15:02:15.132000', '2020-02-10 15:02:15.132000', '2020-02-10 15:02:15.132000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', NULL, '2020-02-10 15:02:17.000000');
-INSERT INTO `questionnaire` VALUES (37, 'teacher', '2007000008', NULL, '17878011321', '专任教师', 1, '男', '程英鑫', '111112222233333111', '健康', '健康', b'1', '2020-02-10 15:03:21.337000', '就这样', b'1', b'1', b'1', b'1', b'1', '武汉不知道那里', '鱼峰区', '2020-02-10 15:03:21.337000', '2020-02-10 15:03:21.337000', '2020-02-10 15:03:21.337000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', NULL, '2020-02-10 15:03:23.000000');
-INSERT INTO `questionnaire` VALUES (34, 'student', NULL, '174063068', '17878011321', '软件技术', 1, '男', '陈荣源', '452123199807186114', '健康', '健康', b'1', '2020-02-10 14:56:42.675000', '就这样', b'1', b'1', b'1', b'1', b'0', '武汉不知道那里', '鱼峰区', '2020-02-10 14:56:42.675000', '2020-02-10 14:56:42.675000', '2020-02-10 14:56:42.675000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', '普高2017移动应用开发1班', '2020-02-10 14:56:45.000000');
-INSERT INTO `questionnaire` VALUES (38, 'teacher', '2006010005', NULL, '17878011321', '专任教师', 1, '女', '杨惠 ', '111112222233333111', '健康', '健康', b'1', '2020-02-10 15:05:29.790000', '就这样', b'1', b'1', b'1', b'1', b'1', '武汉不知道那里', '鱼峰区', '2020-02-10 15:05:29.790000', '2020-02-10 15:05:29.790000', '2020-02-10 15:05:29.790000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', NULL, '2020-02-10 15:05:30.000000');
-INSERT INTO `questionnaire` VALUES (39, 'teacher', '2009000062', NULL, '17878011321', '专任教师', 1, '女', '王丽娟', '111112222233333111', '健康', '健康', b'1', '2020-02-10 15:16:14.212000', '就这样', b'1', b'1', b'1', b'1', NULL, '武汉不知道那里', '鱼峰区', '2020-02-10 15:16:14.212000', '2020-02-10 15:16:14.212000', '2020-02-10 15:16:14.212000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', NULL, '2020-02-10 15:16:15.000000');
-INSERT INTO `questionnaire` VALUES (40, 'teacher', '2007010006', NULL, '17878011321', '专任教师', 1, '男', '陈书光', '111112222233333111', '健康', '健康', b'1', '2020-02-10 15:18:03.523000', '就这样', b'1', b'1', b'1', b'1', NULL, '武汉不知道那里', '鱼峰区', '2020-02-10 15:18:03.524000', '2020-02-10 15:18:03.524000', '2020-02-10 15:18:03.523000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', NULL, '2020-02-10 15:18:05.000000');
+INSERT INTO `questionnaire` VALUES ('36', 'teacher', '2006010022', null, '17878011321', '专任教师', '1', '男', '黄超', '111112222233333111', '健康', '健康', '', '2020-02-10 15:02:15.132000', '就这样', '', '', '', '', '', '武汉不知道那里', '鱼峰区', '2020-02-10 15:02:15.132000', '2020-02-10 15:02:15.132000', '2020-02-10 15:02:15.132000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', null, '2020-02-10 15:02:17.000000');
+INSERT INTO `questionnaire` VALUES ('37', 'teacher', '2007000008', null, '17878011321', '专任教师', '1', '男', '程英鑫', '111112222233333111', '健康', '健康', '', '2020-02-10 15:03:21.337000', '就这样', '', '', '', '', '', '武汉不知道那里', '鱼峰区', '2020-02-10 15:03:21.337000', '2020-02-10 15:03:21.337000', '2020-02-10 15:03:21.337000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', null, '2020-02-10 15:03:23.000000');
+INSERT INTO `questionnaire` VALUES ('34', 'student', null, '174063068', '17878011321', '软件技术', '1', '男', '陈荣源', '452123199807186114', '健康', '健康', '', '2020-02-10 14:56:42.675000', '就这样', '', '', '', '', '', '武汉不知道那里', '鱼峰区', '2020-02-10 14:56:42.675000', '2020-02-10 14:56:42.675000', '2020-02-10 14:56:42.675000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', '普高2017移动应用开发1班', '2020-02-10 14:56:45.000000');
+INSERT INTO `questionnaire` VALUES ('38', 'teacher', '2006010005', null, '17878011321', '专任教师', '1', '女', '杨惠 ', '111112222233333111', '健康', '健康', '', '2020-02-10 15:05:29.790000', '就这样', '', '', '', '', '', '武汉不知道那里', '鱼峰区', '2020-02-10 15:05:29.790000', '2020-02-10 15:05:29.790000', '2020-02-10 15:05:29.790000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', null, '2020-02-10 15:05:30.000000');
+INSERT INTO `questionnaire` VALUES ('39', 'teacher', '2009000062', null, '17878011321', '专任教师', '1', '女', '王丽娟', '111112222233333111', '健康', '健康', '', '2020-02-10 15:16:14.212000', '就这样', '', '', '', '', null, '武汉不知道那里', '鱼峰区', '2020-02-10 15:16:14.212000', '2020-02-10 15:16:14.212000', '2020-02-10 15:16:14.212000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', null, '2020-02-10 15:16:15.000000');
+INSERT INTO `questionnaire` VALUES ('40', 'teacher', '2007010006', null, '17878011321', '专任教师', '1', '男', '陈书光', '111112222233333111', '健康', '健康', '', '2020-02-10 15:18:03.523000', '就这样', '', '', '', '', null, '武汉不知道那里', '鱼峰区', '2020-02-10 15:18:03.524000', '2020-02-10 15:18:03.524000', '2020-02-10 15:18:03.523000', 'wu', 'zhangzhang', '管理方式很严格哦', '五星街', 'wuwuw', '192.142.11.9', null, '2020-02-10 15:18:05.000000');
+INSERT INTO `questionnaire` VALUES ('41', 'teacher', '2007010004', '', '15877258958', '专任教师', null, '男', '宋伟奇', '450204197611090634', '健康', '', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.253.157.106', '', '2020-02-10 18:22:08.000000');
+INSERT INTO `questionnaire` VALUES ('42', 'teacher', '2018010244', '', '15277283565', '专任教师', null, '女', '李芬', '422202198701186603', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '测试下', '116.253.157.106', '', '2020-02-10 18:25:39.000000');
+INSERT INTO `questionnaire` VALUES ('43', 'student', '', '174011059', '13667805660', '', '1', '女', '苏海丽', '450205199910310428', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '我很健康', '116.253.157.106', '普高2017计算机网络技术（对口）3班', '2020-02-10 18:28:29.000000');
+INSERT INTO `questionnaire` VALUES ('44', 'student', '', '174063072', '', '', '0', '男', '雷建忠', '452123199810105813', '发热', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.253.157.106', '普高2017移动应用开发1班', '2020-02-10 18:30:56.000000');
+INSERT INTO `questionnaire` VALUES ('45', 'student', '', '174023059', '', '', '0', '女', '陈思燕', '450922199809120501', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.253.157.106', '普高2017软件技术2班', '2020-02-10 18:34:04.000000');
+INSERT INTO `questionnaire` VALUES ('46', 'student', '', '174023011', '13377218331', '', '0', '男', '吴尚将', '450921199803143239', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '43.247.230.14', '普高2017软件技术1班', '2020-02-10 19:59:00.000000');
+INSERT INTO `questionnaire` VALUES ('47', 'student', '', '174013103', '18777583218', '', '1', '男', '邓晓南', '450802199812089655', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.181.94.64', '普高2017计算机网络技术2班', '2020-02-10 20:02:10.000000');
+INSERT INTO `questionnaire` VALUES ('48', 'teacher', '2016010005', '', '18177267784', '软件技术', null, '女', '蒋玲萍', '431126199008087640', '发热和咳嗽', '发热和咳嗽', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '无', '43.247.230.14', '', '2020-02-10 20:18:29.000000');
+INSERT INTO `questionnaire` VALUES ('49', 'student', '', '174023016', '18278857913', '', '1', '男', '邓振全', '452729199911030217', '健康', '健康', '', '2020-01-31 00:00:00.000000', '肢体接触', '', '', '', '', null, '某某小区', '五星街', '2020-01-31 00:00:00.000000', null, '2020-01-01 00:00:00.000000', '自驾', '小李晓莉', '封小区', '北京', '无', '43.247.230.14', '普高2017软件技术2班', '2020-02-10 20:33:13.000000');
+INSERT INTO `questionnaire` VALUES ('50', 'student', '', '174023017', '18278857913', '', '1', '男', '何兆琪', '452424199905140710', '健康', '健康', '', '2020-01-31 00:00:00.000000', '肢体接触', '', '', '', '', null, '某某小区', '五星街', '2020-01-31 00:00:00.000000', null, '2020-01-01 00:00:00.000000', '自驾', '小李晓莉', '封小区', '北京', '无', '43.247.230.14', '普高2017软件技术1班', '2020-02-10 20:34:11.000000');
+INSERT INTO `questionnaire` VALUES ('51', 'student', '', '174023020', '18877909273', '', '1', '男', '陈建', '450512199807260012', '发热和咳嗽', '发热和咳嗽', '', '2021-02-02 00:00:00.000000', '吃饭时接触', '', '', '', '', null, '123123', '123123', '2020-01-01 00:00:00.000000', '2020-01-01 00:00:00.000000', '2020-01-01 00:00:00.000000', 'G8123', '不知道', '封小区', '湖南', '无', '43.247.230.14', '普高2017软件技术2班', '2020-02-10 20:36:27.000000');
+INSERT INTO `questionnaire` VALUES ('52', 'student', '', '174023041', '17807892923', '', '1', '男', '韦克广', '452730199908052955', '咳嗽', '发热', '', '2020-11-02 00:00:00.000000', '肢体接触', '', '', '', '', null, '东方明珠', '万象城', '2020-02-15 00:00:00.000000', null, '2020-02-23 00:00:00.000000', '汽车汽车', '小李、小红', '下楼活动', '海南', '无', '43.247.230.14', '普高2017软件技术1班', '2020-02-10 20:52:34.000000');
+INSERT INTO `questionnaire` VALUES ('53', 'teacher', '2006010004', '', '13877229416', '计算化', null, '男', '张良平', '450501196404150916', '发热和咳嗽', '发热和咳嗽', '', null, '', '', '', '', '', null, '金叉画小区', '城中区', '2020-02-22 00:00:00.000000', '2020-02-15 00:00:00.000000', '2020-02-16 00:00:00.000000', '班车桂C1231', '不知道', '居家隔离', '天津', '无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无', '43.247.230.14', '', '2020-02-10 20:57:19.000000');
+INSERT INTO `questionnaire` VALUES ('54', 'student', '', '174023051', '13597379404', '', '1', '男', '江天福', '450922199810063751', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '无', '43.247.230.14', '普高2017软件技术1班', '2020-02-10 22:11:29.000000');
+INSERT INTO `questionnaire` VALUES ('55', 'student', '', '174023052', '13377252796', '', '0', '男', '何鑫', '450923199902208272', '发热', '健康', '', '2020-02-09 00:00:00.000000', '公交车上接触', '', '', '', '', null, '幸福小区', '蟠龙山', '2020-02-15 00:00:00.000000', '2020-02-22 00:00:00.000000', '2020-02-22 00:00:00.000000', '班车桂h61c2', '不知道', '居家隔离', '呼伦贝尔', '无', '43.247.230.14', '普高2017软件技术1班', '2020-02-10 22:18:32.000000');
+INSERT INTO `questionnaire` VALUES ('56', 'student', '', '174023018', '13647899347', '', '1', '男', '李其康', '450512199908240037', '健康', '健康', '', '2020-02-09 00:00:00.000000', '公交车上接触', '', '', '', '', null, '幸福小区', '蟠龙山', '2020-02-15 00:00:00.000000', '2020-02-22 00:00:00.000000', '2020-02-22 00:00:00.000000', '班车桂h61c2', '不知道', '居家隔离', '呼伦贝尔', '无', '43.247.230.14', '普高2017软件技术2班', '2020-02-10 22:19:25.000000');
+INSERT INTO `questionnaire` VALUES ('57', 'teacher', '2006010027', '', '15907724822', '教师', null, '女', '徐立宇', '522221197907281620', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.136.98.247', '', '2020-02-10 22:22:51.000000');
+INSERT INTO `questionnaire` VALUES ('58', 'teacher', '2006010147', '', '13132626000', '计算机基础', null, '女', '刘丹', '450205197611210022', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '222.84.150.68', '', '2020-02-10 22:23:47.000000');
+INSERT INTO `questionnaire` VALUES ('59', 'teacher', '2007010009', '', '18977285694', '软件', null, '女', '朱群梅', '532201198310050329', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '222.217.141.105', '', '2020-02-10 22:25:10.000000');
+INSERT INTO `questionnaire` VALUES ('60', 'teacher', '2006010015', '', '18877213373', '软件技术', null, '女', '禤鲜', '450205197806030021', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.181.233.87', '', '2020-02-10 22:27:51.000000');
+INSERT INTO `questionnaire` VALUES ('61', 'student', '', '174023087', '18276323347', '', '1', '女', '李利新', '450322199904022026', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '171.107.43.124', '普高2017软件技术1班', '2020-02-10 22:31:08.000000');
+INSERT INTO `questionnaire` VALUES ('62', 'student', '', '174023058', '13367673973', '', '1', '女', '傅丽明', '450721199711204443', '咳嗽', '咳嗽', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '113.15.213.250', '普高2017软件技术1班', '2020-02-10 22:32:11.000000');
+INSERT INTO `questionnaire` VALUES ('63', 'teacher', '2006010016', '', '13481229180', '软件', null, '男', '温晓宇', '450205198110051339', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.183.96.48', '', '2020-02-10 22:34:32.000000');
+INSERT INTO `questionnaire` VALUES ('64', 'teacher', '2006010047', '', '15877286281', 'ps', null, '男', '周小单', '51122119820125821X', '健康', '健康', '', '2020-02-15 00:00:00.000000', '武汉加油', '', '', '', '', null, '小行星小区', '哈登小区', '2020-02-21 00:00:00.000000', '2020-02-23 00:00:00.000000', '2020-02-15 00:00:00.000000', '步行', '李白', '如居家隔离', '安徽', '无', '43.247.230.14', '', '2020-02-10 22:35:28.000000');
+INSERT INTO `questionnaire` VALUES ('65', 'student', '', '174023023', '18154749545', '', '1', '男', '何成功', '45212219970109037X', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.253.37.139', '普高2017软件技术1班', '2020-02-10 22:35:33.000000');
+INSERT INTO `questionnaire` VALUES ('66', 'student', '', '174023083', '18178468613', '', '1', '男', '欧秉毅', '452402199809230013', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.253.37.139', '普高2017软件技术1班', '2020-02-10 22:35:59.000000');
+INSERT INTO `questionnaire` VALUES ('67', 'teacher', '2017000036', '', '18977244500', '行政秘书', null, '女', '莫艳余', '452229199201070620', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '113.13.156.197', '', '2020-02-10 22:36:58.000000');
+INSERT INTO `questionnaire` VALUES ('68', 'teacher', '2016000040', '', '18978091999', '学干', null, '女', '刘丽萍', '450205198607040029', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '182.89.89.197', '', '2020-02-10 22:37:46.000000');
+INSERT INTO `questionnaire` VALUES ('69', 'student', '', '194023008', '18775129569', '', '0', '男', '蒋荣江', '431124200108311657', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '103.251.98.188', '普高2019软件技术1班', '2020-02-10 22:38:11.000000');
+INSERT INTO `questionnaire` VALUES ('70', 'student', '', '194023045', '13507760596', '', '0', '男', '谭荣思', '452624200012190012', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '121.31.246.38', '普高2019软件技术1班', '2020-02-10 22:38:45.000000');
+INSERT INTO `questionnaire` VALUES ('71', 'student', '', '184051017', '18269517587', '', '0', '女', '梁江兰', '45088119961026502X', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.9.198.220', '普高2018电子商务技术3班', '2020-02-10 22:38:46.000000');
+INSERT INTO `questionnaire` VALUES ('72', 'student', '', '184023070', '18377442776', '', '0', '女', '黄晓宇', '450481199805100442', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '223.104.91.155', '普高2018软件技术2班', '2020-02-10 22:40:21.000000');
+INSERT INTO `questionnaire` VALUES ('73', 'student', '', '184023073', '18278903301', '', '0', '男', '袁发琪', '450521199809307810', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '223.104.90.26', '普高2018软件技术2班', '2020-02-10 22:40:44.000000');
+INSERT INTO `questionnaire` VALUES ('74', 'teacher', '2009010093', '', '13977230087', '实习干事', null, '女', '廖唯妤', '450221198112240029', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.136.76.202', '', '2020-02-10 22:41:15.000000');
+INSERT INTO `questionnaire` VALUES ('75', 'student', '', '184023092', '15777690142', '', '0', '男', '黄永帅', '452625199911032019', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '111.58.233.207', '普高2018软件技术2班', '2020-02-10 22:41:41.000000');
+INSERT INTO `questionnaire` VALUES ('76', 'student', '', '184023072', '18277996828', '', '0', '男', '叶泽民', '45051220000413101X', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.183.52.234', '普高2018软件技术2班', '2020-02-10 22:42:17.000000');
+INSERT INTO `questionnaire` VALUES ('77', 'student', '', '174023060', '18877552387', '', '1', '女', '朱晓茵', '450881199912122323', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.181.94.64', '普高2017软件技术1班', '2020-02-10 22:43:01.000000');
+INSERT INTO `questionnaire` VALUES ('78', 'student', '', '184023059', '18777375265', '', '0', '女', '伍文芳', '450324199906225823', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.1.42.6', '普高2018软件技术2班', '2020-02-10 22:43:16.000000');
+INSERT INTO `questionnaire` VALUES ('79', 'student', '', '184011064', '18172140553', '', '0', '男', '彭康宇', '450204200012050336', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '106.127.238.124', '普高2018软件技术（对口）3班', '2020-02-10 22:50:59.000000');
+INSERT INTO `questionnaire` VALUES ('80', 'student', '', '184023032', '18877053447', '', '0', '男', '梁耀荣', '450881199908169014', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.9.198.53', '普高2018软件技术1班', '2020-02-10 22:51:07.000000');
+INSERT INTO `questionnaire` VALUES ('81', 'student', '', '174023063', '15296276251', '', '1', '女', '苏永欣', '45263119990305264X', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.182.11.190', '普高2017软件技术1班', '2020-02-10 22:59:24.000000');
+INSERT INTO `questionnaire` VALUES ('82', 'teacher', '2009010034', '', '13633084251', '计算机专任教师', null, '男', '万青', '450205197605040418', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '无', '125.73.80.212', '', '2020-02-10 23:05:38.000000');
+INSERT INTO `questionnaire` VALUES ('83', 'student', '', '184053087', '18877425022', '', '0', '女', '陈钰杏', '450481199912180468', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.140.45.64', '普高2018电子商务技术2班', '2020-02-10 23:05:40.000000');
+INSERT INTO `questionnaire` VALUES ('84', 'student', '', '184023044', '18174918911', '', '0', '男', '龙永鑫', '452725199905130013', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '无', '117.182.87.205', '普高2018软件技术同耕方向班', '2020-02-10 23:06:13.000000');
+INSERT INTO `questionnaire` VALUES ('85', 'student', '', '184023053', '15177731942', '', '0', '男', '韦传海', '450221199909052417', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.136.99.152', '普高2018软件技术同耕方向班', '2020-02-10 23:29:14.000000');
+INSERT INTO `questionnaire` VALUES ('86', 'student', '', '184023061', '18177300965', '', '0', '女', '杨兰', '450328200001060025', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.182.96.189', '普高2018软件技术2班', '2020-02-10 23:30:07.000000');
+INSERT INTO `questionnaire` VALUES ('87', 'student', '', '174023066', '17878216711', '', '1', '男', '曾凡雄', '452226199906052415', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.136.31.227', '普高2017软件技术1班', '2020-02-10 23:34:20.000000');
+INSERT INTO `questionnaire` VALUES ('88', 'teacher', '2006010003', '', '18978058654', '软件技术', null, '男', '唐子蛟', '310107197508131218', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '自我禁闭差不多一个月了！', '125.73.91.102', '', '2020-02-10 23:52:15.000000');
+INSERT INTO `questionnaire` VALUES ('89', 'student', '', '174023013', '18107751430', '', '1', '男', '李扬', '450902199806252714', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '43.247.230.14', '普高2017软件技术1班', '2020-02-11 00:00:34.000000');
+INSERT INTO `questionnaire` VALUES ('90', 'teacher', '2009010108', '', '17376108213', '教师', null, '男', '练佳熠', '450203198209141016', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '很正常', '116.253.157.106', '', '2020-02-11 00:01:09.000000');
+INSERT INTO `questionnaire` VALUES ('91', 'student', '', '174023016', '18278857913', '', '1', '男', '邓振全', '452729199911030217', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '43.247.230.14', '普高2017软件技术2班', '2020-02-11 00:02:32.000000');
+INSERT INTO `questionnaire` VALUES ('92', 'student', '', '174023017', '17677049310', '', '1', '男', '何兆琪', '452424199905140710', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '43.247.230.14', '普高2017软件技术1班', '2020-02-11 00:03:31.000000');
+INSERT INTO `questionnaire` VALUES ('93', 'student', '', '174023021', '18677235516', '', '1', '男', '黄显欧', '452631199802112615', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '43.247.230.14', '普高2017软件技术2班', '2020-02-11 00:04:11.000000');
+INSERT INTO `questionnaire` VALUES ('94', 'student', '', '174023022', '15994556380', '', '1', '男', '邱云强', '450881199811201719', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '43.247.230.14', '普高2017软件技术2班', '2020-02-11 00:04:55.000000');
+INSERT INTO `questionnaire` VALUES ('95', 'teacher', '2015000073', '', '18775226755', '行政', null, '女', '黎青滕', '452629199104270921', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.253.157.106', '', '2020-02-11 00:06:19.000000');
+INSERT INTO `questionnaire` VALUES ('96', 'student', '', '174023034', '18275982273', '', '1', '男', '农凯胜', '452131199812083339', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '171.110.162.130', '普高2017软件技术2班', '2020-02-11 00:07:47.000000');
+INSERT INTO `questionnaire` VALUES ('97', 'student', '', '174023069', '15977205452', '', '0', '男', '樊荣康', '452226199908210018', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '117.182.144.140', '普高2017软件技术1班', '2020-02-11 00:18:29.000000');
+INSERT INTO `questionnaire` VALUES ('98', 'student', '', '174023006', '17880432262', '', '1', '男', '梁义泽', '450981199802192799', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.11.101.26', '普高2017软件技术2班', '2020-02-11 00:41:08.000000');
+INSERT INTO `questionnaire` VALUES ('99', 'student', '', '174023077', '15078036011', '', '1', '女', '蔡梅凤', '450881199901161781', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '36.19.100.105', '普高2017软件技术1班', '2020-02-11 01:25:10.000000');
+INSERT INTO `questionnaire` VALUES ('100', 'student', '', '174023067', '15277231459', '', '1', '男', '黄高军', '452225200005180910', '健康', '健康', '', null, '', '', '', '', '', null, '', '', null, null, null, '', '', '', '', '', '116.253.250.27', '普高2017软件技术1班', '2020-02-11 09:01:58.000000');
 
 -- ----------------------------
--- Table structure for student
+-- Table structure for `student`
 -- ----------------------------
 DROP TABLE IF EXISTS `student`;
-CREATE TABLE `student`  (
+CREATE TABLE `student` (
   `studentNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '学号主键',
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生姓名',
-  `sex` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生性别',
-  `schoolClass` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学生班级',
-  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证',
-  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话号码',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '学生姓名',
+  `sex` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '学生性别',
+  `schoolClass` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '学生班级',
+  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '身份证',
+  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '电话号码',
   PRIMARY KEY (`studentNumber`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of student
@@ -363,7 +421,7 @@ INSERT INTO `student` VALUES ('174013020', '覃天明', '男', '普高2017云计
 INSERT INTO `student` VALUES ('174013052', '黎正园', '女', '普高2017计算机网络技术2班', '452428199806121026', '18378480020');
 INSERT INTO `student` VALUES ('174013057', '莫倩', '女', '普高2017计算机网络技术1班', '452702199812170361', '13877823497');
 INSERT INTO `student` VALUES ('174023063', '苏永欣', '女', '普高2017软件技术1班', '45263119990305264X', '15296276251');
-INSERT INTO `student` VALUES ('174103023', '周裕钦', '男', '普高2017软件技术（手机应用方向）3班', '450702199805228412', NULL);
+INSERT INTO `student` VALUES ('174103023', '周裕钦', '男', '普高2017软件技术（手机应用方向）3班', '450702199805228412', null);
 INSERT INTO `student` VALUES ('174063074', '吴子灏', '男', '普高2017移动应用开发2班', '452123199903133418', '13211319420');
 INSERT INTO `student` VALUES ('174011016', '蓝秀健', '男', '普高2017计算机网络技术（对口）4班', '45092219990710349X', '17377226214');
 INSERT INTO `student` VALUES ('174013027', '董健林', '男', '普高2017计算机网络技术1班', '450802199907173614', '18607859114');
@@ -1738,7 +1796,7 @@ INSERT INTO `student` VALUES ('184073062', '杨华豪', '男', '普高2018物流
 INSERT INTO `student` VALUES ('184073063', '罗国顺', '男', '普高2018物流信息技术2班', '452723199904202457', '18077853067');
 INSERT INTO `student` VALUES ('184073065', '陈俊广', '男', '普高2018物流信息技术2班', '452225199901030034', '18378294971');
 INSERT INTO `student` VALUES ('184073066', '顾世林', '男', '普高2018物流信息技术2班', '450981200101274711', '18176903120');
-INSERT INTO `student` VALUES ('184043002', '蒋松伸', '男', '普高2018电子信息工程技术1班', '450324200104183735', NULL);
+INSERT INTO `student` VALUES ('184043002', '蒋松伸', '男', '普高2018电子信息工程技术1班', '450324200104183735', null);
 INSERT INTO `student` VALUES ('184043003', '王畅', '男', '普高2018电子信息工程技术1班', '450204199909141018', '18878215707');
 INSERT INTO `student` VALUES ('184043004', '韦克业', '男', '普高2018电子信息工程技术1班', '452730199809152010', '15078102625');
 INSERT INTO `student` VALUES ('184043005', '潘世贸', '男', '普高2018电子信息工程技术1班', '452229200104174511', '17687726473');
@@ -2740,7 +2798,7 @@ INSERT INTO `student` VALUES ('194013017', '刘桂琴', '女', '普高2019计算
 INSERT INTO `student` VALUES ('194053038', '姚丁荟', '女', '普高2019电子商务技术1班', '452231200101302524', '18178201404');
 INSERT INTO `student` VALUES ('194011088', '黄庆辉', '男', '普高2019计算机网络技术（对口）5班', '450111200104051211', '18070927212');
 INSERT INTO `student` VALUES ('194023081', '何玉洁', '女', '普高2019软件技术2班', '450722200006265162', '17307873942');
-INSERT INTO `student` VALUES ('194013103', '伍家盈', '女', '普高2019计算机网络技术2班', '450721200009211825', NULL);
+INSERT INTO `student` VALUES ('194013103', '伍家盈', '女', '普高2019计算机网络技术2班', '450721200009211825', null);
 INSERT INTO `student` VALUES ('194023061', '李泽荣', '男', '普高2019软件技术2班', '452223200201150011', '13078001169');
 INSERT INTO `student` VALUES ('194093047', '郭柳秋', '女', '普高2019云计算技术与应用1班', '452626200006134607', '17776167622');
 INSERT INTO `student` VALUES ('194033040', '陈雪怡', '女', '普高2019动漫制作技术3班', '450981200201083920', '18593956731');
@@ -3064,39 +3122,82 @@ INSERT INTO `student` VALUES ('176105111', '李洁凤', '女', '17计网班（�
 INSERT INTO `student` VALUES ('2015515126', '韦俊俊', '女', '15数媒1班（中职）', '450221200001084924', '18677235328');
 
 -- ----------------------------
--- Table structure for student_questionnaire
+-- Table structure for `student_questionnaire`
 -- ----------------------------
 DROP TABLE IF EXISTS `student_questionnaire`;
-CREATE TABLE `student_questionnaire`  (
+CREATE TABLE `student_questionnaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
-  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
-  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
-  `touchHuBeiPerson` bit(1) NULL DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
-  `confirmIll` bit(1) NULL DEFAULT NULL COMMENT '是否为疑似病例或确诊病例。两个选项：医院已确诊；否，身体健康。true表示有，false表示没有。\r\n',
-  `intro` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `ip` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址，由系统自动填入',
-  `createTime` datetime(6) NULL DEFAULT NULL COMMENT '投票时间，由数据库写入',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
+  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
+  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
+  `touchHuBeiPerson` bit(1) DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
+  `confirmIll` bit(1) DEFAULT NULL COMMENT '是否为疑似病例或确诊病例。两个选项：医院已确诊；否，身体健康。true表示有，false表示没有。\r\n',
+  `intro` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  `ip` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'ip地址，由系统自动填入',
+  `createTime` datetime(6) DEFAULT NULL COMMENT '投票时间，由数据库写入',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of student_questionnaire
 -- ----------------------------
-INSERT INTO `student_questionnaire` VALUES (1, '陈荣源', '健康', '健康', b'1', b'1', NULL, '192.142.11.9', '2020-02-10 14:56:45.000000');
+INSERT INTO `student_questionnaire` VALUES ('1', '陈荣源', '健康', '健康', '', '', null, '192.142.11.9', '2020-02-10 14:56:45.000000');
+INSERT INTO `student_questionnaire` VALUES ('2', '苏海丽', '健康', '健康', '', '', '我很健康', '116.253.157.106', '2020-02-10 18:28:29.000000');
+INSERT INTO `student_questionnaire` VALUES ('3', '雷建忠', '发热', '健康', '', '', '', '116.253.157.106', '2020-02-10 18:30:57.000000');
+INSERT INTO `student_questionnaire` VALUES ('4', '陈思燕', '健康', '健康', '', '', '', '116.253.157.106', '2020-02-10 18:34:04.000000');
+INSERT INTO `student_questionnaire` VALUES ('5', '吴尚将', '健康', '健康', '', '', '', '43.247.230.14', '2020-02-10 19:59:00.000000');
+INSERT INTO `student_questionnaire` VALUES ('6', '邓晓南', '健康', '健康', '', '', '', '117.181.94.64', '2020-02-10 20:02:10.000000');
+INSERT INTO `student_questionnaire` VALUES ('7', '邓振全', '健康', '健康', '', '', '无', '43.247.230.14', '2020-02-10 20:33:13.000000');
+INSERT INTO `student_questionnaire` VALUES ('8', '何兆琪', '健康', '健康', '', '', '无', '43.247.230.14', '2020-02-10 20:34:11.000000');
+INSERT INTO `student_questionnaire` VALUES ('9', '陈建', '发热和咳嗽', '发热和咳嗽', '', '', '无', '43.247.230.14', '2020-02-10 20:36:27.000000');
+INSERT INTO `student_questionnaire` VALUES ('10', '韦克广', '咳嗽', '发热', '', '', '无', '43.247.230.14', '2020-02-10 20:52:34.000000');
+INSERT INTO `student_questionnaire` VALUES ('11', '江天福', '健康', '健康', '', '', '无', '43.247.230.14', '2020-02-10 22:11:29.000000');
+INSERT INTO `student_questionnaire` VALUES ('12', '何鑫', '发热', '健康', '', '', '无', '43.247.230.14', '2020-02-10 22:18:32.000000');
+INSERT INTO `student_questionnaire` VALUES ('13', '李其康', '健康', '健康', '', '', '无', '43.247.230.14', '2020-02-10 22:19:25.000000');
+INSERT INTO `student_questionnaire` VALUES ('14', '李利新', '健康', '健康', '', '', '', '171.107.43.124', '2020-02-10 22:31:08.000000');
+INSERT INTO `student_questionnaire` VALUES ('15', '傅丽明', '咳嗽', '咳嗽', '', '', '', '113.15.213.250', '2020-02-10 22:32:11.000000');
+INSERT INTO `student_questionnaire` VALUES ('16', '何成功', '健康', '健康', '', '', '', '116.253.37.139', '2020-02-10 22:35:33.000000');
+INSERT INTO `student_questionnaire` VALUES ('17', '欧秉毅', '健康', '健康', '', '', '', '116.253.37.139', '2020-02-10 22:35:59.000000');
+INSERT INTO `student_questionnaire` VALUES ('18', '蒋荣江', '健康', '健康', '', '', '', '103.251.98.188', '2020-02-10 22:38:11.000000');
+INSERT INTO `student_questionnaire` VALUES ('19', '谭荣思', '健康', '健康', '', '', '', '121.31.246.38', '2020-02-10 22:38:45.000000');
+INSERT INTO `student_questionnaire` VALUES ('20', '梁江兰', '健康', '健康', '', '', '', '116.9.198.220', '2020-02-10 22:38:46.000000');
+INSERT INTO `student_questionnaire` VALUES ('21', '黄晓宇', '健康', '健康', '', '', '', '223.104.91.155', '2020-02-10 22:40:21.000000');
+INSERT INTO `student_questionnaire` VALUES ('22', '袁发琪', '健康', '健康', '', '', '', '223.104.90.26', '2020-02-10 22:40:44.000000');
+INSERT INTO `student_questionnaire` VALUES ('23', '黄永帅', '健康', '健康', '', '', '', '111.58.233.207', '2020-02-10 22:41:41.000000');
+INSERT INTO `student_questionnaire` VALUES ('24', '叶泽民', '健康', '健康', '', '', '', '117.183.52.234', '2020-02-10 22:42:17.000000');
+INSERT INTO `student_questionnaire` VALUES ('25', '朱晓茵', '健康', '健康', '', '', '', '117.181.94.64', '2020-02-10 22:43:01.000000');
+INSERT INTO `student_questionnaire` VALUES ('26', '伍文芳', '健康', '健康', '', '', '', '116.1.42.6', '2020-02-10 22:43:16.000000');
+INSERT INTO `student_questionnaire` VALUES ('27', '彭康宇', '健康', '健康', '', '', '', '106.127.238.124', '2020-02-10 22:50:59.000000');
+INSERT INTO `student_questionnaire` VALUES ('28', '梁耀荣', '健康', '健康', '', '', '', '116.9.198.53', '2020-02-10 22:51:07.000000');
+INSERT INTO `student_questionnaire` VALUES ('29', '苏永欣', '健康', '健康', '', '', '', '117.182.11.190', '2020-02-10 22:59:24.000000');
+INSERT INTO `student_questionnaire` VALUES ('30', '陈钰杏', '健康', '健康', '', '', '', '117.140.45.64', '2020-02-10 23:05:40.000000');
+INSERT INTO `student_questionnaire` VALUES ('31', '龙永鑫', '健康', '健康', '', '', '无', '117.182.87.205', '2020-02-10 23:06:13.000000');
+INSERT INTO `student_questionnaire` VALUES ('32', '韦传海', '健康', '健康', '', '', '', '117.136.99.152', '2020-02-10 23:29:14.000000');
+INSERT INTO `student_questionnaire` VALUES ('33', '杨兰', '健康', '健康', '', '', '', '117.182.96.189', '2020-02-10 23:30:07.000000');
+INSERT INTO `student_questionnaire` VALUES ('34', '曾凡雄', '健康', '健康', '', '', '', '117.136.31.227', '2020-02-10 23:34:20.000000');
+INSERT INTO `student_questionnaire` VALUES ('35', '李扬', '健康', '健康', '', '', '', '43.247.230.14', '2020-02-11 00:00:34.000000');
+INSERT INTO `student_questionnaire` VALUES ('36', '邓振全', '健康', '健康', '', '', '', '43.247.230.14', '2020-02-11 00:02:32.000000');
+INSERT INTO `student_questionnaire` VALUES ('37', '何兆琪', '健康', '健康', '', '', '', '43.247.230.14', '2020-02-11 00:03:31.000000');
+INSERT INTO `student_questionnaire` VALUES ('38', '黄显欧', '健康', '健康', '', '', '', '43.247.230.14', '2020-02-11 00:04:11.000000');
+INSERT INTO `student_questionnaire` VALUES ('39', '邱云强', '健康', '健康', '', '', '', '43.247.230.14', '2020-02-11 00:04:55.000000');
+INSERT INTO `student_questionnaire` VALUES ('40', '农凯胜', '健康', '健康', '', '', '', '171.110.162.130', '2020-02-11 00:07:47.000000');
+INSERT INTO `student_questionnaire` VALUES ('41', '樊荣康', '健康', '健康', '', '', '', '117.182.144.140', '2020-02-11 00:18:29.000000');
+INSERT INTO `student_questionnaire` VALUES ('42', '梁义泽', '健康', '健康', '', '', '', '116.11.101.26', '2020-02-11 00:41:08.000000');
+INSERT INTO `student_questionnaire` VALUES ('43', '蔡梅凤', '健康', '健康', '', '', '', '36.19.100.105', '2020-02-11 01:25:10.000000');
+INSERT INTO `student_questionnaire` VALUES ('44', '黄高军', '健康', '健康', '', '', '', '116.253.250.27', '2020-02-11 09:01:59.000000');
 
 -- ----------------------------
--- Table structure for teacher
+-- Table structure for `teacher`
 -- ----------------------------
 DROP TABLE IF EXISTS `teacher`;
-CREATE TABLE `teacher`  (
+CREATE TABLE `teacher` (
   `teacherNumber` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '职工号主键',
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '职工姓名',
-  `sex` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
-  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '身份证号码',
-  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号码',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '职工姓名',
+  `sex` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '性别',
+  `identityCard` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '身份证号码',
+  `tel` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '手机号码',
   PRIMARY KEY (`teacherNumber`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teacher
@@ -3161,612 +3262,627 @@ INSERT INTO `teacher` VALUES ('2007010003', '郑剑安', '男', '450303198209181
 INSERT INTO `teacher` VALUES ('2009010051', '刘智强', '男', '450204198110230613', '13877277464');
 INSERT INTO `teacher` VALUES ('2006010021', '谭超', '男', '430981198301090016', '13407880705');
 INSERT INTO `teacher` VALUES ('2009000074', '辛子毅', '男', '450202196402140618', '13877218837');
-INSERT INTO `teacher` VALUES ('2007020001', '范莉莎', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000021', '谢名洋', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000025', '张益德', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000002', '尹庆和', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000035', '邱同保', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020065', '刘洪波', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000012', '彭涛', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000002', '刘明皞', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010120', '黄新', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000005', '梁皓璐', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018000008', '张媚', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020001', '李彤', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010241', '唐琼芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010205', '胡国正', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2020000003', '冯方燕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000013', '黄福生', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000006', '叶俊', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000009', '岑家彪', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000007', '林华', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000008', '赵红敏', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020005', '李美娟', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010141', '田勇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000060', '盘晓灵', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000001', '谢婧雯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000030', '韦益金', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000003', '袁燕慧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000009', '颜家继', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000033', '何思露', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000036', '马依娜', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020024', '陈铭', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000009', '刘慧玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000050', '梁双逢', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000043', '肖龙星', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000010', '曾美雄', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020028', '刘顺松', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2020000001', '王艳飞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010076', '金涛', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010099', '陈佳雪', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020006', '彭志华', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000039', '黄康', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020012', '黄倩', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000006', '潘彦希', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000076', '张颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000013', '侯春玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000014', '刘景清', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000018', '吴双萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000042', '李慧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020002', '冯如屏', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010051', '陈桂兰', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020018', '郭忠芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010004', '覃春望', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007000045', '黄凌玢', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020015', '陈柳艳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020067', '李奕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010038', '康日晖', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010092', '蒙万才', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000046', '潘雯娟', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010000004', '罗宣', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000008', '夏璐', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010130', '全少克', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000007', '窦晓杰', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010202', '邵翔', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000026', '柴龙珍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020022', '陆锋锐', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000015', '覃伟', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020023', '龙柳萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020015', '赵岚', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000047', '曹吴玮', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020055', '黄瑞国', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020032', '莫华伟', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020014', '黄清戈', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010008', '韦伟权', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020033', '陆俞锟', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020036', '吴量', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000016', '黄昌龙', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000011', '陆俞孜', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020008', '卢柳萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012000004', '蒋凌霞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000047', '徐绍有', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2008000001', '梁雪梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000024', '潘道利', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010082', '凌雅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000005', '叶月珠', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000037', '覃晓恬', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000054', '韦仲康', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000022', '付瑾', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000036', '李永强', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000001', '许冬', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000022', '杨丽金', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007000002', '吴非', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000040', '周剑', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000017', '祝广顺', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010099', '廖远东', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000005', '饶新宇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010094', '龙大治', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000016', '唐琨', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010052', '黄梅珍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020081', '张应刚', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000030', '刘林杭', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000021', '唐晓君', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000017', '黎珂园', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010055', '黎泽红', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010015', '蒋建玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007000009', '刘敬党', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010013', '董志刚', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007000059', '张超云', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000007', '胡金明', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010154', '祁琳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010000008', '王瑜', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000019', '曾贤军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010054', '刘巧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010026', '张银辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010000007', '张国成', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000011', '沈虹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000001', '梁宇', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007000005', '周加礼', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000042', '刘杰', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000044', '徐端', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000043', '黄坤勇', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000002', '陈萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000030', '余婷婷', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000044', '黄杏兰', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000057', '霍袁媛', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000038', '王琨', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2020000002', '李柳慧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010127', '曾贞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000049', '陈娟华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000038', '姚慧琳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000034', '甘慧露', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020046', '陈鹰', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000059', '白波', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020022', '覃维和', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020056', '陈国樑', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000023', '吴启宇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010000032', '彭夏洁', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010074', '李宏俭', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020025', '黄春凡', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000004', '胡昌汉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012000008', '杨扬', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000003', '龙友', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010000009', '严小兵', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010086', '欧阳丽红', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020015', '黄敏操', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010006', '谢功茂', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000047', '李志宇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000041', '张馨月', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000032', '李志伟', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020076', '马丽斌', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020017', '张琳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010024', '梁超香', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010001', '罗永有', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020019', '陈伟智', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000051', '刘浩', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000050', '石柳峰', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000022', '肖昌飞', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000015', '蔡斌', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000054', '韦玉礼', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012000002', '李文华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010023', '陈铭', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000012', '蔡明', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000010', '廖洁明', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000013', '白雪莉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000056', '庞霓辉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000055', '黄玉萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000029', '周福', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010010', '龚建新', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010020', '李谦', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010066', '李婷婷', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010050', '吴东炽', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010088', '张婷婷', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010042', '陈国芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011000008', '袁露', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000017', '唐乐', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018000111', '黄昱皓', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000029', '许馨文', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010106', '梁茜琳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000020', '韦秋月', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000033', '黄杰莹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000074', '黄廷泉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000032', '蓝雪玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010100', '朱明超', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000037', '韦海滢', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000063', '李春', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010242', '黄常勇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000031', '李诚', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000015', '韦颖莹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000004', '江波', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000006', '邓璞', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010063', '蒋文慧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010046', '徐颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010134', '刘永红', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010038', '曾玉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010039', '潘洁华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010097', '魏国建', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010109', '王尧茗', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010008', '蒋秀姣', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010023', '龚敏', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2008010013', '张风沙', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010015', '邹雪梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010109', '董健', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010049', '刘少荣', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010062', '蒋丛萃', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2008010014', '杨隽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010020', '陈巧灵', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010055', '韦柳媛', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010021', '葛兰', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020053', '袁德铭', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000066', '罗雯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010110', '陈广涛', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010111', '赖保利', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010021', '张洁', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010024', '黎曦', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010010005', '雷学荣', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020071', '覃玉金', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010039', '凌韬', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010001', '何婵', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010033', '陈晨', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010123', '邹蓉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010101', '庞明丽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2008020001', '赖婷婷', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010105', '尹湘', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010106', '肖智慧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010108', '蓝岚', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010050', '梁卫华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015010008', '沈玉琼', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010019', '梁萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010003', '张凯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010018', '雷杏', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010017', '李新', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010005', '潘倩', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010133', '童革', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010020', '汤佳妮', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010104', '廖文碧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010016', '刘丽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010028', '覃云', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011010007', '许昊', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011030029', '谢宇霞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010014', '杨李芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010129', '艾丽君', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010132', '黄辛欣', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010137', '刘斯琴', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010199', '廖希凡', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000035', '刘拓', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000030', '李怡', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010006', '杨佳文', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010005', '张园莉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020025', '刘晔', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010076', '莫柳军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020049', '汤婕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010072', '汪旻', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020066', '谭红雨', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020008', '赵红梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000041', '周慧玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000038', '解庆元', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020037', '徐丽华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000059', '何凌', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010020003', '李迎宾', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010110', '孙乃强', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000024', '薛莹莹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000021', '潘红艳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000009', '雷敏', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000020', '张宏达', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000022', '吴冠冕', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000024', '解璐瑶', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000072', '黄汉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000035', '吴柳华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000029', '韦琪', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000040', '杨思婕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000030', '陈爱飞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000033', '张妮', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000031', '韦晓敏', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010210', '赵怀军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000036', '罗琪', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000028', '丘薇', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000021', '蓝柔美', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010083', '陈晓', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006000011', '胡晓梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000034', '杨艳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012000009', '黄颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010010', '周霞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020037', '陆显琛', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010053', '周秋玉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010031', '李梅玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010088', '谢萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020028', '陈甦甦', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010132', '及歆哲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010073', '钟鸽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010135', '刘奕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020069', '邱鸿生', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010075', '李红梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020035', '覃向庆', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010078', '刘燕洲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010124', '苏琬婷', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010087', '陈燕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020051', '江毅馨', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010043', '秦红梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010074', '曹旸', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010040', '唐甜', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010080', '黄荣军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010073', '徐玉芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020029', '廖春艳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010148', '刘金宪', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010032', '黄桂芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020041', '张侠', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010034', '梁淑双', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020073', '李国颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010011', '徐瑗', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000004', '陈梦明', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000018', '周亚雯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020019', '林筱颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010008', '覃肖莹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010129', '黄小丽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010037', '冯敏洁', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014010001', '邓倩倩', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020060', '覃明森', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020005', '何萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010098', '刘丽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020039', '莫晓东', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020040', '覃拥民', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2008010002', '付凤华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010113', '邹伟琦', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010029', '兰浩原', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015010007', '刘丽芝', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010013', '李彦熙', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010012', '路丹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010016', '钟卉敏', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010008', '陈秋月', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010009', '郭辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010010', '王积军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010134', '覃倩琳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010133', '谌鸿虎', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000001', '朱丹梦', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010002', '臧汉博', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010201', '李竹林', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010087', '郭婕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010011', '何倩娟', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010004', '廖钐杉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010007', '黄嘉璐', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010011', '姚子嫦', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2020010003', '罗静', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010009', '唐淳杰', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010096', '文建平', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015010003', '丁于强', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2013010004', '梁显飞', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020061', '蒋武生', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020080', '袁莉莉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012000007', '农金萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000019', '王熙', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011000006', '陈春曲', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000014', '古文珍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000015', '黄瑶', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000055', '史益宁', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000031', '范舒婕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000028', '程雅梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000032', '李林起', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010204', '申蕾', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000016', '李霞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000023', '李柳军', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000009', '佟奕辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000053', '莫忠斌', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000023', '梁坚', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010100', '宋扬', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000005', '朱琳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010054', '李俊杰', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010084', '陈柏钦', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010033', '付锦珍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009030031', '莫圣杨', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010045', '甘正正', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010095', '单冉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010077', '黄学慧', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010092', '梁松', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010089', '陈璐', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010094', '李烨', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010091', '何燕妮', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010044', '周峰', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010031', '朱翠芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010118', '严小亮', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020083', '陈乘', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010001', '韦朝运', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009030007', '韦志媛', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011010006', '张倩倩', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2013010005', '张孟阳', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010010003', '刘子锐', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015010005', '韦东奇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012000006', '付林飞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010023', '徐亮', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010024', '肖婕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000008', '张文州', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010020', '梁爽', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010002', '黄彬', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010014', '李伯阳', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011000011', '韦永丽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010001', '刘雅婷', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010022', '谭斯斯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010002', '张忱', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010007', '李晶晶', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010016', '吕宗辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010015', '田甜', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000016', '吕爱菊', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010139', '黄译禾', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010135', '刘少琨', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000002', '刘骏', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010017', '黄辰', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010010', '周琳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010014', '张存立', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2020010001', '李希', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020006', '杨箭雄', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020011', '覃京翎', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010112', '彭定文', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020005', '肖颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2008020002', '肖丽君', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020008', '陶秋媛', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012000010', '魏小霞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010020009', '卢心喆', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000011', '兰斓', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2013000001', '梁裕玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011000003', '陈郑娟', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000012', '宋薇', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000012', '罗楚妤', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000026', '陈越', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000027', '莫欢', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000068', '蓝亮美', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000025', '邹晓辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020012', '周莹', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020013', '李兴林', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020010', '梁瑜', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000048', '王雪琦', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010061', '廖仕军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010119', '韦峻松', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010030', '郭伟', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010113', '吴铭', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010103', '曾云生', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010070', '刘卫', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010071', '闫云敬', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010115', '覃志高', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010056', '谢帮灵', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010091', '覃继兵', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020014', '黄丝雪', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020016', '樊艺雯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010105', '覃鹏', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020035', '侯庆愉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010057', '张容', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010081', '韦英', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010059', '韦艳珍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010069', '陈柳艺', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020010', '邓宁', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010036', '杨凌', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020007', '陈颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010102', '赵佳萌', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2013010001', '朱炳耀', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011010004', '梁增提', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010046', '邱頔', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010067', '韦东辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012030051', '黄彧', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014010003', '王莉莉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010060', '韦金孜', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020026', '刘榴', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010030038', '韦淇淋', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010008', '吴津宇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010021', '韦雪薇', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015010001', '杨永贵', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015010002', '范涛', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2012030023', '梁正智', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010120', '梁家兴', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000019', '陈翰雯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010022', '李春术', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010109', '廖金团', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010128', '董志辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010001', '韩立星', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020009', '喻馨锐', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010112', '欧松华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000023', '李忆', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010017', '黄妹园', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000023', '王媛', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000067', '刘娟', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020054', '颜小平', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000039', '李怡然', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000010', '梁蔚', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000014', '罗紫馨', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010136', '莫凡', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000007', '周容吉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010018', '卢珊珊', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000032', '高哓雯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020075', '韦静', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020017', '蒋丽丽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000037', '柏京京', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010114', '覃潘燕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010131', '李小英', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010116', '孔雪飞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010118', '黄成柱', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010047', '周小果', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010119', '杨霞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010083', '梁锦萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010115', '覃敉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010102', '黄冬梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020070', '杨忠愿', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010025', '詹桂辉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010126', '左毅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010128', '韦燕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010009', '罗晓玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000045', '王欣', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010019', '覃丹竹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010008', '赵莹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010040', '谢靖宇', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000035', '黄峰革', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010022', '陈雪松', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010142', '叶显芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020031', '刘贵祥', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010101', '黄维薇', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020042', '韦日江', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010077', '梁生强', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007010053', '朱方', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010156', '陈秋洁', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010085', '苏当', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010079', '周忠东', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010143', '林贵权', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010146', '黄家荣', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010145', '银军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010144', '黄海', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000070', '张又', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010003', '宋欣晏', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010009', '韦晨', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010137', '周华', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2013000002', '周莹', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010025', '刘明', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010141', '张华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010138', '邱萍', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010140', '纪录', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020077', '罗小燕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010139', '廖彩云', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009020009', '罗景静', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000006', '李雯雯', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016010018', '苏梅芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017010012', '刘浩', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2011010001', '邵红霞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010024', '赵锐铭', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010079', '黄颖', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010089', '杨玲', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020007', '黄武', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000071', '黄寒梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2014000002', '费卫芝', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000068', '黄俊', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020068', '梁天月', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000061', '蓝梨华', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000020', '于诗凡', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010012', '李厚瑷', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019010013', '安涛', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2020010002', '孙琪琪', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020010', '黎思思', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020013', '覃承贤', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2007020017', '王辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000063', '黄贤锋', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000076', '陈秋康', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2010000027', '陈蕾伊', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020044', '狄丽丽', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2016000010', '廖素红', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000003', '黄旭梅', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000003', '覃晓琦', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2019000013', '蔡禹', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000072', '刘军', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020048', '卢会兰', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000069', '赵慧洁', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000064', '卓琴', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010121', '粟静', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009000077', '唐荣敏', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020047', '宁浩', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010138', '林思宏', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010208', '陈伟芳', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2018010203', '陆广辉', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020027', '黄䶮', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006010035', '傅文庆', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2013000003', '温薪彦', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015000036', '韦晓燕', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000033', '江梦源', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2017000034', '贝为奕', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2009010111', '高文莉', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2015010006', '梁雪贞', '女', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2008020003', '王伟明', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020030', '阮志南', '男', NULL, NULL);
-INSERT INTO `teacher` VALUES ('2006020045', '林洁', '女', NULL, NULL);
+INSERT INTO `teacher` VALUES ('2007020001', '范莉莎', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000021', '谢名洋', '男', null, null);
+INSERT INTO `teacher` VALUES ('2014000025', '张益德', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000002', '尹庆和', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000035', '邱同保', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020065', '刘洪波', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000012', '彭涛', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000002', '刘明皞', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010120', '黄新', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000005', '梁皓璐', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018000008', '张媚', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020001', '李彤', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010241', '唐琼芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010205', '胡国正', '男', null, null);
+INSERT INTO `teacher` VALUES ('2020000003', '冯方燕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000013', '黄福生', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017000006', '叶俊', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017000009', '岑家彪', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017000007', '林华', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000008', '赵红敏', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020005', '李美娟', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010141', '田勇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000060', '盘晓灵', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000001', '谢婧雯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000030', '韦益金', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000003', '袁燕慧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000009', '颜家继', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000033', '何思露', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000036', '马依娜', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020024', '陈铭', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000009', '刘慧玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000050', '梁双逢', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000043', '肖龙星', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000010', '曾美雄', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007020028', '刘顺松', '男', null, null);
+INSERT INTO `teacher` VALUES ('2020000001', '王艳飞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010076', '金涛', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010099', '陈佳雪', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020006', '彭志华', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000039', '黄康', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020012', '黄倩', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000006', '潘彦希', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000076', '张颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000013', '侯春玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000014', '刘景清', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000018', '吴双萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000042', '李慧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020002', '冯如屏', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010051', '陈桂兰', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020018', '郭忠芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010004', '覃春望', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007000045', '黄凌玢', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020015', '陈柳艳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020067', '李奕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010038', '康日晖', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010092', '蒙万才', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000046', '潘雯娟', '女', null, null);
+INSERT INTO `teacher` VALUES ('2010000004', '罗宣', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000008', '夏璐', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010130', '全少克', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000007', '窦晓杰', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010202', '邵翔', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000026', '柴龙珍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020022', '陆锋锐', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000015', '覃伟', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020023', '龙柳萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020015', '赵岚', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000047', '曹吴玮', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020055', '黄瑞国', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020032', '莫华伟', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020014', '黄清戈', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010008', '韦伟权', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020033', '陆俞锟', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020036', '吴量', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000016', '黄昌龙', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000011', '陆俞孜', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007020008', '卢柳萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2012000004', '蒋凌霞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000047', '徐绍有', '男', null, null);
+INSERT INTO `teacher` VALUES ('2008000001', '梁雪梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000024', '潘道利', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010082', '凌雅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000005', '叶月珠', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000037', '覃晓恬', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000054', '韦仲康', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000022', '付瑾', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000036', '李永强', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000001', '许冬', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017000022', '杨丽金', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007000002', '吴非', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000040', '周剑', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006000017', '祝广顺', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010099', '廖远东', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000005', '饶新宇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010094', '龙大治', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000016', '唐琨', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007010052', '黄梅珍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020081', '张应刚', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000030', '刘林杭', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017000021', '唐晓君', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000017', '黎珂园', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010055', '黎泽红', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019010015', '蒋建玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007000009', '刘敬党', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010013', '董志刚', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007000059', '张超云', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006000007', '胡金明', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010154', '祁琳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2010000008', '王瑜', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000019', '曾贤军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007010054', '刘巧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010026', '张银辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2010000007', '张国成', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000011', '沈虹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000001', '梁宇', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007000005', '周加礼', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000042', '刘杰', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000044', '徐端', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000043', '黄坤勇', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006000002', '陈萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000030', '余婷婷', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000044', '黄杏兰', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000057', '霍袁媛', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000038', '王琨', '女', null, null);
+INSERT INTO `teacher` VALUES ('2020000002', '李柳慧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010127', '曾贞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000049', '陈娟华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000038', '姚慧琳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000034', '甘慧露', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020046', '陈鹰', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000059', '白波', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020022', '覃维和', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020056', '陈国樑', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000023', '吴启宇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2010000032', '彭夏洁', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010074', '李宏俭', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020025', '黄春凡', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000004', '胡昌汉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2012000008', '杨扬', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006000003', '龙友', '男', null, null);
+INSERT INTO `teacher` VALUES ('2010000009', '严小兵', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010086', '欧阳丽红', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007020015', '黄敏操', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017010006', '谢功茂', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000047', '李志宇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000041', '张馨月', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000032', '李志伟', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020076', '马丽斌', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020017', '张琳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010024', '梁超香', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010001', '罗永有', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020019', '陈伟智', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000051', '刘浩', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000050', '石柳峰', '男', null, null);
+INSERT INTO `teacher` VALUES ('2014000022', '肖昌飞', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006000015', '蔡斌', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000054', '韦玉礼', '男', null, null);
+INSERT INTO `teacher` VALUES ('2012000002', '李文华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010023', '陈铭', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006000012', '蔡明', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006000010', '廖洁明', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006000013', '白雪莉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000056', '庞霓辉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000055', '黄玉萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000029', '周福', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007010010', '龚建新', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007010020', '李谦', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010066', '李婷婷', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010050', '吴东炽', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010088', '张婷婷', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010042', '陈国芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2011000008', '袁露', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000017', '唐乐', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018000111', '黄昱皓', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000029', '许馨文', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010106', '梁茜琳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000020', '韦秋月', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000033', '黄杰莹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000074', '黄廷泉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000032', '蓝雪玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010100', '朱明超', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017000037', '韦海滢', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000063', '李春', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010242', '黄常勇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000031', '李诚', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000015', '韦颖莹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000004', '江波', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000006', '邓璞', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010063', '蒋文慧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010046', '徐颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010134', '刘永红', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010038', '曾玉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010039', '潘洁华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010097', '魏国建', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010109', '王尧茗', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010008', '蒋秀姣', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010023', '龚敏', '男', null, null);
+INSERT INTO `teacher` VALUES ('2008010013', '张风沙', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010015', '邹雪梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010109', '董健', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010049', '刘少荣', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010062', '蒋丛萃', '男', null, null);
+INSERT INTO `teacher` VALUES ('2008010014', '杨隽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010020', '陈巧灵', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010055', '韦柳媛', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010021', '葛兰', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020053', '袁德铭', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000066', '罗雯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010110', '陈广涛', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010111', '赖保利', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010021', '张洁', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010024', '黎曦', '男', null, null);
+INSERT INTO `teacher` VALUES ('2010010005', '雷学荣', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020071', '覃玉金', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010039', '凌韬', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010001', '何婵', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010033', '陈晨', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010123', '邹蓉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010101', '庞明丽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2008020001', '赖婷婷', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010105', '尹湘', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010106', '肖智慧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010108', '蓝岚', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010050', '梁卫华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015010008', '沈玉琼', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010019', '梁萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010003', '张凯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010018', '雷杏', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010017', '李新', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010005', '潘倩', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010133', '童革', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010020', '汤佳妮', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010104', '廖文碧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010016', '刘丽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010028', '覃云', '女', null, null);
+INSERT INTO `teacher` VALUES ('2011010007', '许昊', '女', null, null);
+INSERT INTO `teacher` VALUES ('2011030029', '谢宇霞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010014', '杨李芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010129', '艾丽君', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010132', '黄辛欣', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010137', '刘斯琴', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010199', '廖希凡', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000035', '刘拓', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000030', '李怡', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010006', '杨佳文', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010005', '张园莉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007020025', '刘晔', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010076', '莫柳军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020049', '汤婕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010072', '汪旻', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020066', '谭红雨', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020008', '赵红梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000041', '周慧玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000038', '解庆元', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020037', '徐丽华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000059', '何凌', '男', null, null);
+INSERT INTO `teacher` VALUES ('2010020003', '李迎宾', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010110', '孙乃强', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000024', '薛莹莹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000021', '潘红艳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000009', '雷敏', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000020', '张宏达', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000022', '吴冠冕', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000024', '解璐瑶', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000072', '黄汉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000035', '吴柳华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000029', '韦琪', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000040', '杨思婕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000030', '陈爱飞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000033', '张妮', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000031', '韦晓敏', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010210', '赵怀军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000036', '罗琪', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000028', '丘薇', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000021', '蓝柔美', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010083', '陈晓', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006000011', '胡晓梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000034', '杨艳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2012000009', '黄颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010010', '周霞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020037', '陆显琛', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010053', '周秋玉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010031', '李梅玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010088', '谢萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020028', '陈甦甦', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010132', '及歆哲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010073', '钟鸽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010135', '刘奕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020069', '邱鸿生', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010075', '李红梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020035', '覃向庆', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010078', '刘燕洲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010124', '苏琬婷', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010087', '陈燕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020051', '江毅馨', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007010043', '秦红梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010074', '曹旸', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010040', '唐甜', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010080', '黄荣军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010073', '徐玉芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020029', '廖春艳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010148', '刘金宪', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010032', '黄桂芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020041', '张侠', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010034', '梁淑双', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020073', '李国颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010011', '徐瑗', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000004', '陈梦明', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000018', '周亚雯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020019', '林筱颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010008', '覃肖莹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010129', '黄小丽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010037', '冯敏洁', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014010001', '邓倩倩', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020060', '覃明森', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020005', '何萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010098', '刘丽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020039', '莫晓东', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020040', '覃拥民', '男', null, null);
+INSERT INTO `teacher` VALUES ('2008010002', '付凤华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010113', '邹伟琦', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010029', '兰浩原', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015010007', '刘丽芝', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010013', '李彦熙', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010012', '路丹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010016', '钟卉敏', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010008', '陈秋月', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010009', '郭辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017010010', '王积军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2018010134', '覃倩琳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010133', '谌鸿虎', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019000001', '朱丹梦', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010002', '臧汉博', '男', null, null);
+INSERT INTO `teacher` VALUES ('2018010201', '李竹林', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010087', '郭婕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010011', '何倩娟', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010004', '廖钐杉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010007', '黄嘉璐', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010011', '姚子嫦', '女', null, null);
+INSERT INTO `teacher` VALUES ('2020010003', '罗静', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010009', '唐淳杰', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010096', '文建平', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015010003', '丁于强', '男', null, null);
+INSERT INTO `teacher` VALUES ('2013010004', '梁显飞', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020061', '蒋武生', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020080', '袁莉莉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2012000007', '农金萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000019', '王熙', '女', null, null);
+INSERT INTO `teacher` VALUES ('2011000006', '陈春曲', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000014', '古文珍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000015', '黄瑶', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000055', '史益宁', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000031', '范舒婕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000028', '程雅梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000032', '李林起', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010204', '申蕾', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000016', '李霞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000023', '李柳军', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000009', '佟奕辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000053', '莫忠斌', '男', null, null);
+INSERT INTO `teacher` VALUES ('2014000023', '梁坚', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010100', '宋扬', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000005', '朱琳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010054', '李俊杰', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010084', '陈柏钦', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010033', '付锦珍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009030031', '莫圣杨', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007010045', '甘正正', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010095', '单冉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010077', '黄学慧', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010092', '梁松', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010089', '陈璐', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010094', '李烨', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010091', '何燕妮', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010044', '周峰', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010031', '朱翠芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010118', '严小亮', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020083', '陈乘', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010001', '韦朝运', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009030007', '韦志媛', '女', null, null);
+INSERT INTO `teacher` VALUES ('2011010006', '张倩倩', '女', null, null);
+INSERT INTO `teacher` VALUES ('2013010005', '张孟阳', '男', null, null);
+INSERT INTO `teacher` VALUES ('2010010003', '刘子锐', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015010005', '韦东奇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2012000006', '付林飞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010023', '徐亮', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010024', '肖婕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000008', '张文州', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010020', '梁爽', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010002', '黄彬', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010014', '李伯阳', '男', null, null);
+INSERT INTO `teacher` VALUES ('2011000011', '韦永丽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010001', '刘雅婷', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010022', '谭斯斯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010002', '张忱', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010007', '李晶晶', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010016', '吕宗辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2018010015', '田甜', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000016', '吕爱菊', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010139', '黄译禾', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010135', '刘少琨', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000002', '刘骏', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010017', '黄辰', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010010', '周琳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010014', '张存立', '女', null, null);
+INSERT INTO `teacher` VALUES ('2020010001', '李希', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020006', '杨箭雄', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020011', '覃京翎', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010112', '彭定文', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009020005', '肖颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2008020002', '肖丽君', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020008', '陶秋媛', '女', null, null);
+INSERT INTO `teacher` VALUES ('2012000010', '魏小霞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2010020009', '卢心喆', '男', null, null);
+INSERT INTO `teacher` VALUES ('2014000011', '兰斓', '女', null, null);
+INSERT INTO `teacher` VALUES ('2013000001', '梁裕玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2011000003', '陈郑娟', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000012', '宋薇', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000012', '罗楚妤', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000026', '陈越', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000027', '莫欢', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000068', '蓝亮美', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000025', '邹晓辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009020012', '周莹', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009020013', '李兴林', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020010', '梁瑜', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000048', '王雪琦', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010061', '廖仕军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010119', '韦峻松', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010030', '郭伟', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010113', '吴铭', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010103', '曾云生', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010070', '刘卫', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010071', '闫云敬', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010115', '覃志高', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010056', '谢帮灵', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010091', '覃继兵', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009020014', '黄丝雪', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020016', '樊艺雯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010105', '覃鹏', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020035', '侯庆愉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010057', '张容', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010081', '韦英', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010059', '韦艳珍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010069', '陈柳艺', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009020010', '邓宁', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010036', '杨凌', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020007', '陈颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010102', '赵佳萌', '女', null, null);
+INSERT INTO `teacher` VALUES ('2013010001', '朱炳耀', '男', null, null);
+INSERT INTO `teacher` VALUES ('2011010004', '梁增提', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010046', '邱頔', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010067', '韦东辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2012030051', '黄彧', '男', null, null);
+INSERT INTO `teacher` VALUES ('2014010003', '王莉莉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010060', '韦金孜', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020026', '刘榴', '女', null, null);
+INSERT INTO `teacher` VALUES ('2010030038', '韦淇淋', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010008', '吴津宇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016010021', '韦雪薇', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015010001', '杨永贵', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015010002', '范涛', '男', null, null);
+INSERT INTO `teacher` VALUES ('2012030023', '梁正智', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010120', '梁家兴', '男', null, null);
+INSERT INTO `teacher` VALUES ('2016000019', '陈翰雯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010022', '李春术', '男', null, null);
+INSERT INTO `teacher` VALUES ('2018010109', '廖金团', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010128', '董志辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019010001', '韩立星', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020009', '喻馨锐', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010112', '欧松华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000023', '李忆', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010017', '黄妹园', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000023', '王媛', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000067', '刘娟', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020054', '颜小平', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000039', '李怡然', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000010', '梁蔚', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000014', '罗紫馨', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010136', '莫凡', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000007', '周容吉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010018', '卢珊珊', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000032', '高哓雯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020075', '韦静', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020017', '蒋丽丽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000037', '柏京京', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010114', '覃潘燕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010131', '李小英', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010116', '孔雪飞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010118', '黄成柱', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010047', '周小果', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010119', '杨霞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010083', '梁锦萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010115', '覃敉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010102', '黄冬梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020070', '杨忠愿', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010025', '詹桂辉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010126', '左毅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010128', '韦燕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010009', '罗晓玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000045', '王欣', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010019', '覃丹竹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010008', '赵莹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010040', '谢靖宇', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000035', '黄峰革', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007010022', '陈雪松', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010142', '叶显芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020031', '刘贵祥', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010101', '黄维薇', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020042', '韦日江', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010077', '梁生强', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007010053', '朱方', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010156', '陈秋洁', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010085', '苏当', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010079', '周忠东', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010143', '林贵权', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010146', '黄家荣', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010145', '银军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010144', '黄海', '男', null, null);
+INSERT INTO `teacher` VALUES ('2015000070', '张又', '男', null, null);
+INSERT INTO `teacher` VALUES ('2019010003', '宋欣晏', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010009', '韦晨', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010137', '周华', '男', null, null);
+INSERT INTO `teacher` VALUES ('2013000002', '周莹', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010025', '刘明', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010141', '张华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010138', '邱萍', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010140', '纪录', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020077', '罗小燕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010139', '廖彩云', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009020009', '罗景静', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000006', '李雯雯', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016010018', '苏梅芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017010012', '刘浩', '男', null, null);
+INSERT INTO `teacher` VALUES ('2011010001', '邵红霞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010024', '赵锐铭', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010079', '黄颖', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009010089', '杨玲', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020007', '黄武', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000071', '黄寒梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2014000002', '费卫芝', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000068', '黄俊', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020068', '梁天月', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000061', '蓝梨华', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000020', '于诗凡', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010012', '李厚瑷', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019010013', '安涛', '男', null, null);
+INSERT INTO `teacher` VALUES ('2020010002', '孙琪琪', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020010', '黎思思', '女', null, null);
+INSERT INTO `teacher` VALUES ('2007020013', '覃承贤', '男', null, null);
+INSERT INTO `teacher` VALUES ('2007020017', '王辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000063', '黄贤锋', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000076', '陈秋康', '男', null, null);
+INSERT INTO `teacher` VALUES ('2010000027', '陈蕾伊', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006020044', '狄丽丽', '女', null, null);
+INSERT INTO `teacher` VALUES ('2016000010', '廖素红', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000003', '黄旭梅', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000003', '覃晓琦', '女', null, null);
+INSERT INTO `teacher` VALUES ('2019000013', '蔡禹', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009000072', '刘军', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020048', '卢会兰', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000069', '赵慧洁', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000064', '卓琴', '女', null, null);
+INSERT INTO `teacher` VALUES ('2006010121', '粟静', '女', null, null);
+INSERT INTO `teacher` VALUES ('2009000077', '唐荣敏', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020047', '宁浩', '男', null, null);
+INSERT INTO `teacher` VALUES ('2018010138', '林思宏', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010208', '陈伟芳', '女', null, null);
+INSERT INTO `teacher` VALUES ('2018010203', '陆广辉', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020027', '黄䶮', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006010035', '傅文庆', '女', null, null);
+INSERT INTO `teacher` VALUES ('2013000003', '温薪彦', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015000036', '韦晓燕', '女', null, null);
+INSERT INTO `teacher` VALUES ('2017000033', '江梦源', '男', null, null);
+INSERT INTO `teacher` VALUES ('2017000034', '贝为奕', '男', null, null);
+INSERT INTO `teacher` VALUES ('2009010111', '高文莉', '女', null, null);
+INSERT INTO `teacher` VALUES ('2015010006', '梁雪贞', '女', null, null);
+INSERT INTO `teacher` VALUES ('2008020003', '王伟明', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020030', '阮志南', '男', null, null);
+INSERT INTO `teacher` VALUES ('2006020045', '林洁', '女', null, null);
 
 -- ----------------------------
--- Table structure for teacher_questionnaire
+-- Table structure for `teacher_questionnaire`
 -- ----------------------------
 DROP TABLE IF EXISTS `teacher_questionnaire`;
-CREATE TABLE `teacher_questionnaire`  (
+CREATE TABLE `teacher_questionnaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id//主键',
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名。取消表单该字段',
-  `workType` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '岗位或所授学科',
-  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
-  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
-  `touchHuBeiPerson` tinyint(1) NULL DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
-  `confirmIll` tinyint(1) NULL DEFAULT NULL COMMENT '是否为疑似病例或确诊病例。两个选项：医院已确诊；否，身体健康。true表示有，false表示没有。',
-  `intro` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其他说明。用于备注字段',
-  `ip` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址，由系统自动填入',
-  `createTime` datetime(6) NULL DEFAULT NULL COMMENT '填表时间，由数据库写入',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名。取消表单该字段',
+  `workType` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '岗位或所授学科',
+  `myHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '当天本人健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。该字段用于所有表相关的“是否有咳嗽、胸闷、发烧等不适症状”说明',
+  `myfamilyHealth` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '当天家庭成员健康状况。单选列表：健康，发热，咳嗽，发热和咳嗽。',
+  `touchHuBeiPerson` tinyint(1) DEFAULT NULL COMMENT '当天是否密切接触来自或到达过武汉及湖北其他地区人员。true表示有，false表示没有。',
+  `confirmIll` tinyint(1) DEFAULT NULL COMMENT '是否为疑似病例或确诊病例。两个选项：医院已确诊；否，身体健康。true表示有，false表示没有。',
+  `intro` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '其他说明。用于备注字段',
+  `ip` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'ip地址，由系统自动填入',
+  `createTime` datetime(6) DEFAULT NULL COMMENT '填表时间，由数据库写入',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teacher_questionnaire
 -- ----------------------------
-INSERT INTO `teacher_questionnaire` VALUES (1, '黄超', '专任教师', '健康', '健康', 1, 1, 'wuwuw', '192.142.11.9', '2020-02-10 15:02:17.000000');
-INSERT INTO `teacher_questionnaire` VALUES (2, '程英鑫', '专任教师', '健康', '健康', 1, 1, 'wuwuw', '192.142.11.9', '2020-02-10 15:03:23.000000');
-INSERT INTO `teacher_questionnaire` VALUES (3, '杨惠 ', '专任教师', '健康', '健康', 1, 1, 'wuwuw', '192.142.11.9', '2020-02-10 15:05:30.000000');
-INSERT INTO `teacher_questionnaire` VALUES (4, '王丽娟', '专任教师', '健康', '健康', 1, 1, 'wuwuw', '192.142.11.9', '2020-02-10 15:16:15.000000');
-INSERT INTO `teacher_questionnaire` VALUES (5, '陈书光', '专任教师', '健康', '健康', 1, 1, 'wuwuw', '192.142.11.9', '2020-02-10 15:18:05.000000');
-
-SET FOREIGN_KEY_CHECKS = 1;
+INSERT INTO `teacher_questionnaire` VALUES ('1', '黄超', '专任教师', '健康', '健康', '1', '1', 'wuwuw', '192.142.11.9', '2020-02-10 15:02:17.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('2', '程英鑫', '专任教师', '健康', '健康', '1', '1', 'wuwuw', '192.142.11.9', '2020-02-10 15:03:23.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('3', '杨惠 ', '专任教师', '健康', '健康', '1', '1', 'wuwuw', '192.142.11.9', '2020-02-10 15:05:30.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('4', '王丽娟', '专任教师', '健康', '健康', '1', '1', 'wuwuw', '192.142.11.9', '2020-02-10 15:16:15.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('5', '陈书光', '专任教师', '健康', '健康', '1', '1', 'wuwuw', '192.142.11.9', '2020-02-10 15:18:05.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('6', '宋伟奇', '专任教师', '健康', '', '0', '0', '', '116.253.157.106', '2020-02-10 18:22:08.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('7', '李芬', '专任教师', '健康', '健康', '0', '0', '测试下', '116.253.157.106', '2020-02-10 18:25:39.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('8', '蒋玲萍', '软件技术', '发热和咳嗽', '发热和咳嗽', '0', '1', '无', '43.247.230.14', '2020-02-10 20:18:29.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('9', '张良平', '计算化', '发热和咳嗽', '发热和咳嗽', '0', '0', '无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无', '43.247.230.14', '2020-02-10 20:57:19.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('10', '徐立宇', '教师', '健康', '健康', '0', '0', '', '117.136.98.247', '2020-02-10 22:22:51.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('11', '刘丹', '计算机基础', '健康', '健康', '0', '0', '', '222.84.150.68', '2020-02-10 22:23:47.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('12', '朱群梅', '软件', '健康', '健康', '0', '0', '', '222.217.141.105', '2020-02-10 22:25:10.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('13', '禤鲜', '软件技术', '健康', '健康', '0', '0', '', '117.181.233.87', '2020-02-10 22:27:51.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('14', '温晓宇', '软件', '健康', '健康', '0', '0', '', '117.183.96.48', '2020-02-10 22:34:32.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('15', '周小单', 'ps', '健康', '健康', '1', '1', '无', '43.247.230.14', '2020-02-10 22:35:28.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('16', '莫艳余', '行政秘书', '健康', '健康', '0', '0', '', '113.13.156.197', '2020-02-10 22:36:58.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('17', '刘丽萍', '学干', '健康', '健康', '0', '0', '', '182.89.89.197', '2020-02-10 22:37:46.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('18', '廖唯妤', '实习干事', '健康', '健康', '0', '0', '', '117.136.76.202', '2020-02-10 22:41:15.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('19', '万青', '计算机专任教师', '健康', '健康', '0', '0', '无', '125.73.80.212', '2020-02-10 23:05:38.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('20', '唐子蛟', '软件技术', '健康', '健康', '0', '0', '自我禁闭差不多一个月了！', '125.73.91.102', '2020-02-10 23:52:15.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('21', '练佳熠', '教师', '健康', '健康', '0', '0', '很正常', '116.253.157.106', '2020-02-11 00:01:10.000000');
+INSERT INTO `teacher_questionnaire` VALUES ('22', '黎青滕', '行政', '健康', '健康', '0', '0', '', '116.253.157.106', '2020-02-11 00:06:19.000000');
