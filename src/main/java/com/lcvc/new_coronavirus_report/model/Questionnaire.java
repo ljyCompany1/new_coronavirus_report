@@ -37,12 +37,18 @@ public class Questionnaire {
     private String touchHuBeiDescription;//密切接触过程的具体描述。接触过疫区人员，都要填；否则为空
     private String schoolClass;//年级班级（专业）。接触过疫区人员，都要填；否则为空。取消表单该字段，
 
+    //处理广东、浙江、河南、湖南省等相关信息
+    private Boolean comeFromGZHH;//是否来自广东、浙江、河南、湖南省。
+    private Boolean arriveGZHH;//是否到过广东、浙江、河南、湖南省。
+    private String province;//如果去过/来自广东、浙江、河南、湖南省等，要填是哪个省份的
+
+
     //来自武汉湖北，或是去过武汉湖北，当前依旧停留在武汉，相关字段
     private Boolean comefromHuBei;//是否来自湖北(不包括武汉市)。true表示是，false表示不是
     private Boolean comefromWuHan;//是否来自武汉市。true表示是，false表示不是
     private Boolean arriveHuBei;//1月16日后，是否去过湖北(不包括武汉市)。true表示是，false表示不是
     private Boolean arriveWuHan;//1月16日后，是否到过武汉。true表示是，false表示不是
-    private Boolean stayInHubei;//现在是否仍在湖北出差、休假、旅游、探亲等短时停留
+    private Boolean stayInHubei;//现在是否仍在湖北出差、休假、旅游、探亲等短时停留。必须是到达过武汉的（arriveWuHan）人才进一步填
     private String epidemicArea;//疫区居住地。只要去过湖北或武汉，或是来自湖北或武汉,接触过疫区人员，都要填；否则为空
     private String addressInLiuZhou;//柳州居住地。只要去过湖北或武汉，或是来自湖北或武汉，接触过疫区人员，都要填；否则为空
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -147,6 +153,30 @@ public class Questionnaire {
 
     public void setPractice(Boolean practice) {
         this.practice = practice;
+    }
+
+    public Boolean getComeFromGZHH() {
+        return comeFromGZHH;
+    }
+
+    public void setComeFromGZHH(Boolean comeFromGZHH) {
+        this.comeFromGZHH = comeFromGZHH;
+    }
+
+    public Boolean getArriveGZHH() {
+        return arriveGZHH;
+    }
+
+    public void setArriveGZHH(Boolean arriveGZHH) {
+        this.arriveGZHH = arriveGZHH;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public Boolean getComefromHuBei() {

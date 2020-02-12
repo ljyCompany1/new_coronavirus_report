@@ -116,4 +116,16 @@ public class ExcelWirteForTable {
         ExcelWirteForTeacherSheet.getShee(book,list);
         return book;
     }
+
+    /**
+     * 实习生当前在公司上岗情况表
+     * @param list 要遍历的数据集合
+     */
+    public static XSSFWorkbook getPracticeWork(List<Questionnaire> list) {
+        // 创建工作簿
+        XSSFWorkbook book = new XSSFWorkbook();
+        // 创建工作表
+        ExcelWirteForPracticeWorkSheet.getShee(book,list);
+        return book;
+    }
 }

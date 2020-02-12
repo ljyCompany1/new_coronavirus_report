@@ -192,16 +192,16 @@ public class QuestionnaireExcelController {
 
     //获取今天的学生在公司上班的记录的内容：表名：实习学生当前在单位上岗情况表
     @GetMapping("/practiceWork")
-    public String getFromGZHHShengTable(Integer page, Integer limit,HttpServletResponse response){
+    public String getPracticeWorkTable(Integer page, Integer limit,HttpServletResponse response){
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
         questionnairequery.setQueryDate(new Date());//查找今天的表内容
         questionnairequery.setPractice(true);//正在实习
         questionnairequery.setPracticeWorkStatus("在单位上班");//统计在上班的
         List<Questionnaire> list=questionnaireService.query(questionnairequery);//获取数据记录
         //导出表格
-        //根据记录，生成excel表格
+        XSSFWorkbook book= ExcelWirteForTable.getPracticeWork(list);//根据记录，生成excel表格
         //创建文件对象，导出
-        //this.outExcelStream(response,book," 教职工自觉居家观察健康状况表");
+        this.outExcelStream(response,book," 实习学生当前在单位上岗情况表");
         return "SUCCESS";//这里其实就是随意返回一个字符串
     }
 
