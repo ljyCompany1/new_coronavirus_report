@@ -87,7 +87,7 @@ public class ExcelWirteForPracticeWorkSheet {
 
         //list数据
         for (int i = 0; i < list.size(); i++) {
-            XSSFRow listRow = sheet.createRow(i + 1);
+            XSSFRow listRow = sheet.createRow(i + 2);
 
             XSSFCell name = listRow.createCell(0);
             name.setCellValue(list.get(i).getName());

@@ -228,9 +228,9 @@ public class ExcelWirteForFifthSheet {
             intoLeaveHubeiWay.setCellValue(list.get(i).getLeaveHubeiWay());
             intoLeaveHubeiWay.setCellStyle(titleStyle);
 
-            XSSFCell intoTouchHuBeiPersonName= listRow.createCell(13);
-            intoTouchHuBeiPersonName.setCellValue(list.get(i).getTouchHuBeiPersonName());
-            intoTouchHuBeiPersonName.setCellStyle(titleStyle);
+            XSSFCell intoLeaveTogetherPersonName= listRow.createCell(13);
+            intoLeaveTogetherPersonName.setCellValue(list.get(i).getLeaveTogetherPersonName());
+            intoLeaveTogetherPersonName.setCellStyle(titleStyle);
 
             //管控措施  备注
             XSSFCell manageMethods= listRow.createCell(14);

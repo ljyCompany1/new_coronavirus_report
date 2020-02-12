@@ -56,7 +56,7 @@ public class Questionnaire {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date leaveLiuZhou;//离开柳州的时间。包括武汉。只要去过湖北或武汉都要填；否则为空
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date leaveHubei;//离开湖北的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
+    private Date leaveHubei;//离开湖北的时间。包括武汉。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空。备注：目前也用于离开广东、浙江、河南、湖南省的时间，只要有这个条件的都写
     private String leaveHubeiWay;//离开湖北的方式。提示用户填（用文本框）：车次/航班/汽车/自驾。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
     private String leaveTogetherPersonName;//离开时同行的人姓名，可以多写。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空
     private String manageMethods;//管控措施（如为居家隔离，请询问是否有社区每日随访、是否有外出买菜、下楼活动等情况）。只要去过湖北或武汉，或是来自湖北或武汉，都要填；否则为空

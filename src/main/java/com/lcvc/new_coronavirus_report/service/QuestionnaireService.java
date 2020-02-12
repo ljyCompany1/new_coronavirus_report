@@ -138,10 +138,10 @@ public class QuestionnaireService {
         if(questionnaire.getArriveHuBei()==null){
             throw new MyWebException("提交失败：必须填写是否去过湖北");
         }
-        if(questionnaire.getComeFromGZHH()){
+        if(questionnaire.getComeFromGZHH()==null){
             throw new MyWebException("提交失败：必须填写是否来自广东、浙江、河南、湖南省");
         }
-        if(questionnaire.getArriveGZHH()){
+        if(questionnaire.getArriveGZHH()==null){
             throw new MyWebException("提交失败：必须填写是否去过广东、浙江、河南、湖南省");
         }
 
@@ -198,13 +198,18 @@ public class QuestionnaireService {
         }
 
 
+        //满足需要上报条件的（湖北来的人，去过湖北，去过广东、浙江、河南、湖南省）,接触疫区不用上报
+        if(questionnaire.getComefromHuBei()||questionnaire.getComefromWuHan()||questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()||questionnaire.getComeFromGZHH()||questionnaire.getArriveGZHH()){//如果去过武汉湖北
+            if(questionnaire.getArriveLiuZhou()==null){
+                throw new MyWebException("提交失败：必须填写回柳时间");
+            }
+        }
+
+
         //满足任何一个需要上报条件的（湖北来的人，去过湖北，去过广东、浙江、河南、湖南省，接触过疫区）
         if(questionnaire.getComefromHuBei()||questionnaire.getComefromWuHan()||questionnaire.getArriveHuBei()||questionnaire.getArriveWuHan()||questionnaire.getTouchHuBeiPerson()||questionnaire.getComeFromGZHH()||questionnaire.getArriveGZHH()){//如果去过武汉湖北
             if(StringUtils.isEmpty(questionnaire.getAddressInLiuZhou())){//柳州居住地
                 throw new MyWebException("提交失败：必须填写在柳州的居住地");
-            }
-            if(questionnaire.getArriveLiuZhou()==null){
-                throw new MyWebException("提交失败：必须填写回柳时间");
             }
         }
         //都验证通过了，就保存表单信息

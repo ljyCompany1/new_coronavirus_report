@@ -26,7 +26,9 @@ public class ExcelWirteForFisrtSheet {
                 "我市到过武汉市的人员",
                 "我市到过湖北省(除武汉市外)的人员",
                 "密切接触者人数",
-                "我市现在仍在湖北出差、休假、旅游、探亲等短时停留人员"
+                "我市现在仍在湖北出差、休假、旅游、探亲等短时停留人员",
+                "医学观察人员",
+                "备注"
         };
         String sumTitle[] = {"当日增减", "当日存量"};
         String footer[] = {"填报人：", "审核人：", "签发人："};
@@ -79,6 +81,18 @@ public class ExcelWirteForFisrtSheet {
         listStyle.setVerticalAlignment(VerticalAlignment.CENTER); //
         listStyle.setWrapText(true);//自动换行
 
+        //背景颜色
+        XSSFCellStyle bgcolorStyle = book.createCellStyle();
+        bgcolorStyle.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
+        bgcolorStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        bgcolorStyle.setFont(listFont);
+        bgcolorStyle.setBorderBottom(BorderStyle.THIN);
+        bgcolorStyle.setBorderTop(BorderStyle.THIN);
+        bgcolorStyle.setBorderLeft(BorderStyle.THIN);
+        bgcolorStyle.setBorderRight(BorderStyle.THIN);
+        bgcolorStyle.setAlignment(HorizontalAlignment.CENTER);
+        bgcolorStyle.setVerticalAlignment(VerticalAlignment.CENTER); //
+        bgcolorStyle.setWrapText(true);//自动换行
         //设置行
         //第一行无
         XSSFRow noneRow = sheet.createRow(0);
@@ -111,6 +125,8 @@ public class ExcelWirteForFisrtSheet {
         CellRangeAddress region6 = new CellRangeAddress(3, 3, 6, 7);
         CellRangeAddress region7 = new CellRangeAddress(3, 3, 8, 9);
         CellRangeAddress region8 = new CellRangeAddress(3, 3, 10, 11);
+        CellRangeAddress region12 = new CellRangeAddress(3, 3, 12, 13);
+        CellRangeAddress region13 = new CellRangeAddress(3, 4, 14, 14);
         //footer
         CellRangeAddress region9 = new CellRangeAddress(6, 6, 0, 3);
         CellRangeAddress region10 = new CellRangeAddress(6, 6, 4, 7);
@@ -128,11 +144,12 @@ public class ExcelWirteForFisrtSheet {
         sheet.addMergedRegion(region9);
         sheet.addMergedRegion(region10);
         sheet.addMergedRegion(region11);
+        sheet.addMergedRegion(region12);
+        sheet.addMergedRegion(region13);
 
 
         //第一行
         for (int i = 0; i < title.length * 2; i++) {
-            XSSFCell noneCell = noneRow.createCell(i);
             sheet.setColumnWidth(i, 15 * 256);//设置第i列的宽度是31个字符宽度
         }
         //第二行表头
@@ -151,17 +168,19 @@ public class ExcelWirteForFisrtSheet {
 
         //title
         int titleI = 0;
-        for (int i = 0; i < title.length * 2; i++) {
+        for (int i = 0; i < title.length * 2-1; i++) {
             XSSFCell titleCell = titleRow.createCell(i);
             titleCell.setCellStyle(titleStyle);
             if (i % 2 == 0) {
                 titleCell.setCellValue(title[titleI]);
                 titleI++;
             }
+            if(i==12|i==13){
+                titleCell.setCellStyle(bgcolorStyle);
+            }
         }
 
-        //titi1
-        for (int i = 0; i < title.length * 2; i++) {
+        for (int i = 0; i < title.length * 2-2; i++) {
             XSSFCell titleCell1 = titleRow1.createCell(i);
             titleCell1.setCellStyle(titleStyle);
             if (i % 2 == 0) {
@@ -169,6 +188,8 @@ public class ExcelWirteForFisrtSheet {
             } else {
                 titleCell1.setCellValue(sumTitle[1]);
             }
+            XSSFCell titleCell14 = titleRow1.createCell(14);
+            titleCell14.setCellStyle(titleStyle);
         }
 
         //数据栏  list
@@ -187,6 +208,9 @@ public class ExcelWirteForFisrtSheet {
         XSSFCell touchPersonSum = listRow.createCell(9);
         XSSFCell stayInHubeiDeIn = listRow.createCell(10);
         XSSFCell stayInHubeiSum = listRow.createCell(11);
+        XSSFCell observePeopleDeIn = listRow.createCell(12);
+        XSSFCell observePeoplesum = listRow.createCell(13);
+        XSSFCell intro = listRow.createCell(14);
 
         //来自武汉市的市外人员 当日增减量
         formWuHanDeIn.setCellValue(list.getDailyReportToday().getComefromWuHanNumber() - list.getDailyReportInYesterday().getComefromWuHanNumber());
@@ -201,16 +225,16 @@ public class ExcelWirteForFisrtSheet {
         formHubeiSum.setCellValue(list.getDailyReportToday().getComefromHuBeiNumber());
         formHubeiSum.setCellStyle(listStyle);
         //我市到过武汉市的人员 当日增减量
-        arriveWuHanDeIn.setCellValue(list.getDailyReportToday().getArriveWuHanNumber() - list.getDailyReportInYesterday().getComefromWuHanNumber());
+        arriveWuHanDeIn.setCellValue(list.getDailyReportToday().getArriveWuHanNumber() - list.getDailyReportInYesterday().getArriveWuHanNumber());
         arriveWuHanDeIn.setCellStyle(listStyle);
         //我市到过武汉市的人员  当日存量
         arriveWuHanSum.setCellValue(list.getDailyReportToday().getArriveWuHanNumber());
         arriveWuHanSum.setCellStyle(listStyle);
         //我市到过湖北省（除武汉市外）的人员  当日增减量
-        arriveHuBeiDeIn.setCellValue(list.getDailyReportToday().getArriveWuHanNumber() - list.getDailyReportInYesterday().getArriveHuBeiNumber());
+        arriveHuBeiDeIn.setCellValue(list.getDailyReportToday().getArriveHuBeiNumber() - list.getDailyReportInYesterday().getArriveHuBeiNumber());
         arriveHuBeiDeIn.setCellStyle(listStyle);
         //我市到过湖北省（除武汉市外）的人员  当日存量
-        arriveHuBeiSum.setCellValue(list.getDailyReportToday().getArriveWuHanNumber());
+        arriveHuBeiSum.setCellValue(list.getDailyReportToday().getArriveHuBeiNumber());
         arriveHuBeiSum.setCellStyle(listStyle);
         //密切接触者人数  当日增减量
         touchPersonDeIn.setCellValue(list.getDailyReportToday().getTouchHuBeiPersonNumber() - list.getDailyReportInYesterday().getTouchHuBeiPersonNumber());
@@ -224,6 +248,14 @@ public class ExcelWirteForFisrtSheet {
         //我市现在仍在湖北出差、休假、旅游、探亲等短时停留人员  当日存量
         stayInHubeiSum.setCellValue(list.getDailyReportToday().getStayInHubeiNumber());
         stayInHubeiSum.setCellStyle(listStyle);
+        //医学观察者
+        observePeopleDeIn.setCellValue("");
+        observePeopleDeIn.setCellStyle(listStyle);
+        observePeoplesum.setCellValue("");
+        observePeoplesum.setCellStyle(listStyle);
+        //备注
+        intro.setCellValue("");
+        intro.setCellStyle(listStyle);
 
         //签名栏
         XSSFRow footerRow = sheet.createRow(6);
