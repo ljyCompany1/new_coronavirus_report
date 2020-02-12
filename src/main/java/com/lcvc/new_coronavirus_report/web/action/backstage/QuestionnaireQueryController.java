@@ -120,6 +120,34 @@ public class QuestionnaireQueryController {
         return map;
     }
 
+    //来自广东、浙江、河南、湖南省的市外人员排查日报表
+    @GetMapping("/comeFromGZHH")
+    public Map<String, Object> comeFromGZHH(Integer page, Integer limit){
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
+        QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
+        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery.setComeFromGZHH(true);//查询来自广东、浙江、河南、湖南省的市外人员
+        PageObject pageObject =questionnaireService.query(page,limit,questionnairequery);
+        map.put(Constant.JSON_TOTAL,pageObject.getTotalRecords());
+        map.put(Constant.JSON_DATA,pageObject.getList());
+        return map;
+    }
+
+    //去过广东、浙江、河南、湖南省的市外人员排查日报表
+    @GetMapping("/arriveGZHH")
+    public Map<String, Object> arriveGZHH(Integer page, Integer limit){
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
+        QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
+        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery.setArriveGZHH(true);//查询去过广东、浙江、河南、湖南省的市外人员
+        PageObject pageObject =questionnaireService.query(page,limit,questionnairequery);
+        map.put(Constant.JSON_TOTAL,pageObject.getTotalRecords());
+        map.put(Constant.JSON_DATA,pageObject.getList());
+        return map;
+    }
+
     //获取今天的学生表日常记录的内容
     @GetMapping("/student")
     public Map<String, Object> getStudentTable(Integer page, Integer limit){

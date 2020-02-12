@@ -1,6 +1,9 @@
 package com.lcvc.new_coronavirus_report.web.action.backstage;
 
 import com.lcvc.new_coronavirus_report.model.Questionnaire;
+import com.lcvc.new_coronavirus_report.model.base.Constant;
+import com.lcvc.new_coronavirus_report.model.base.JsonCode;
+import com.lcvc.new_coronavirus_report.model.base.PageObject;
 import com.lcvc.new_coronavirus_report.model.form.DailyReportTable;
 import com.lcvc.new_coronavirus_report.model.query.QuestionnaireQuery;
 import com.lcvc.new_coronavirus_report.service.DailyReportService;
@@ -19,9 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 专门处理9个表的内容，并将其用excel导出
@@ -158,6 +159,34 @@ public class QuestionnaireExcelController {
         XSSFWorkbook book= ExcelWirteForTable.getExcel7(list);//根据记录，生成excel表格
         //创建文件对象，导出
         this.outExcelStream(response,book," 密切接触过来自或到达过湖北等疫区人员情况表");
+        return "SUCCESS";//这里其实就是随意返回一个字符串
+    }
+
+    //来自广东、浙江、河南、湖南省的市外人员排查日报表
+    @GetMapping("/comeFromGZHH")
+    public String comeFromGZHH(Integer page, Integer limit){
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
+        QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
+        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery.setComeFromGZHH(true);//查询来自广东、浙江、河南、湖南省的市外人员
+        List<Questionnaire> list=questionnaireService.query(questionnairequery);//获取数据记录
+        //创建文件对象，导出
+
+        return "SUCCESS";//这里其实就是随意返回一个字符串
+    }
+
+    //去过广东、浙江、河南、湖南省的市外人员排查日报表
+    @GetMapping("/arriveGZHH")
+    public String arriveGZHH(Integer page, Integer limit){
+        Map<String, Object> map=new HashMap<String, Object>();
+        map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
+        QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
+        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery.setArriveGZHH(true);//查询去过广东、浙江、河南、湖南省的市外人员
+        List<Questionnaire> list=questionnaireService.query(questionnairequery);//获取数据记录
+        //创建文件对象，导出
+
         return "SUCCESS";//这里其实就是随意返回一个字符串
     }
 
