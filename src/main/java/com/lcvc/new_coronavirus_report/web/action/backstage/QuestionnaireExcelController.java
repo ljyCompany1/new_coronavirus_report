@@ -28,7 +28,7 @@ import java.util.List;
  * https://blog.csdn.net/shrek11/article/details/88988638
  */
 @RestController
-@RequestMapping(value = "/api/backstage/excel")
+@RequestMapping(value = "/api/frontdesk/excel")
 public class QuestionnaireExcelController {
 
     @Autowired
@@ -80,8 +80,8 @@ public class QuestionnaireExcelController {
     @GetMapping("/1-2")
     public String getTable2(HttpServletRequest request,HttpServletResponse response){
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
-        questionnairequery.setQueryDate(new Date());//查找今天的表内容
-        questionnairequery.setComefromWuHan(true);//查询来自武汉的记录
+//        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+//        questionnairequery.setComefromWuHan(true);//查询来自武汉的记录
         List<Questionnaire> list=questionnaireService.query(questionnairequery);//获取数据记录
         //导出表格
         XSSFWorkbook book= ExcelWirteForTable.getExcel2(list);//根据记录，生成excel表格
@@ -151,8 +151,8 @@ public class QuestionnaireExcelController {
     @GetMapping("/1-7")
     public String getTable7(Integer page, Integer limit,HttpServletResponse response){
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
-        questionnairequery.setQueryDate(new Date());//查找今天的表内容
-        questionnairequery.setTouchHuBeiPerson(true);//查询去过密切接触疫区人员的记录
+//        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+//        questionnairequery.setTouchHuBeiPerson(true);//查询去过密切接触疫区人员的记录
         List<Questionnaire> list=questionnaireService.query(questionnairequery);//获取数据记录
         //导出表格
         XSSFWorkbook book= ExcelWirteForTable.getExcel7(list);//根据记录，生成excel表格
@@ -187,6 +187,21 @@ public class QuestionnaireExcelController {
         XSSFWorkbook book= ExcelWirteForTable.getTeacher(list);//根据记录，生成excel表格
         //创建文件对象，导出
         this.outExcelStream(response,book," 教职工自觉居家观察健康状况表");
+        return "SUCCESS";//这里其实就是随意返回一个字符串
+    }
+
+    //获取今天的学生在公司上班的记录的内容：表名：实习学生当前在单位上岗情况表
+    @GetMapping("/practiceWork")
+    public String getFromGZHHShengTable(Integer page, Integer limit,HttpServletResponse response){
+        QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
+        questionnairequery.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery.setPractice(true);//正在实习
+        questionnairequery.setPracticeWorkStatus("在单位上班");//统计在上班的
+        List<Questionnaire> list=questionnaireService.query(questionnairequery);//获取数据记录
+        //导出表格
+        //根据记录，生成excel表格
+        //创建文件对象，导出
+        //this.outExcelStream(response,book," 教职工自觉居家观察健康状况表");
         return "SUCCESS";//这里其实就是随意返回一个字符串
     }
 

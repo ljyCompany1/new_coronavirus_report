@@ -19,7 +19,7 @@ spring:
 #  mvc:
 #    static-path-pattern: /static/**
   thymeleaf:
-    cache: false #缓存（开发时设置为false）
+    cache: true #缓存（开发时设置为false）
   #jdbc配置，springboot默认会把spring.datasource开头的信息收纳，进行DataSource对象的配置，进而进行sqlSessionFactory的配置等相关数据库连接的配置，从而省略了application.xml中的相关
   datasource:
       url: jdbc:mysql://localhost:3306/new_coronavirus_report?characterEncoding=utf-8&serverTimezone=CTT
