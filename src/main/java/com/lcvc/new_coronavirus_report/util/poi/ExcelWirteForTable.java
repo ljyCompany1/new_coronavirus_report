@@ -22,7 +22,7 @@ public class ExcelWirteForTable {
         // 创建工作簿
         XSSFWorkbook book = new XSSFWorkbook();
         // 创建工作表1
-        ExcelWirteForFisrtSheet.getShee1(book,list);
+        ExcelWirteForFisrtSheet.getShee(book,list);
         return book;
     }
 
@@ -34,7 +34,7 @@ public class ExcelWirteForTable {
         // 创建工作簿
         XSSFWorkbook book = new XSSFWorkbook();
         // 创建工作表1
-        ExcelWirteForSecondSheet.getShee2(book,list);
+        ExcelWirteForSecondSheet.getShee(book,list);
         return book;
     }
 
@@ -46,7 +46,7 @@ public class ExcelWirteForTable {
         // 创建工作簿
         XSSFWorkbook book = new XSSFWorkbook();
         // 创建工作表1
-        ExcelWirteForThirdSheet.getShee3(book,list);
+        ExcelWirteForThirdSheet.getShee(book,list);
         return book;
     }
     /**
@@ -57,7 +57,7 @@ public class ExcelWirteForTable {
         // 创建工作簿
         XSSFWorkbook book = new XSSFWorkbook();
         // 创建工作表1
-        ExcelWirteForFourthSheet.getShee4(book,list);
+        ExcelWirteForFourthSheet.getShee(book,list);
         return book;
     }
     /**
@@ -68,18 +68,52 @@ public class ExcelWirteForTable {
         // 创建工作簿
         XSSFWorkbook book = new XSSFWorkbook();
         // 创建工作表1
-        ExcelWirteForFifthSheet.getShee5(book,list);
+        ExcelWirteForFifthSheet.getShee(book,list);
         return book;
     }
     /**
-     * 1.5我市到过湖北省（除武汉市）的人员排查日报表（四）
+     * 1.6
+     * 1月16日后我市现在仍在湖北出差、休假、旅游、探亲等短时停留人员(五）
      * @param list 要遍历的数据集合
      */
     public static XSSFWorkbook getExcel6(List<Questionnaire> list) {
         // 创建工作簿
         XSSFWorkbook book = new XSSFWorkbook();
-        // 创建工作表1
-        ExcelWirteForFifthSheet.getShee5(book,list);
+        // 创建工作表
+        ExcelWirteForSixthSheet.getShee(book,list);
+        return book;
+    }
+    /**
+     * 1.7   密切接触过来自或到达过湖北等疫区人员情况表
+     * @param list 要遍历的数据集合
+     */
+    public static XSSFWorkbook getExcel7(List<Questionnaire> list) {
+        // 创建工作簿
+        XSSFWorkbook book = new XSSFWorkbook();
+        // 创建工作表
+        ExcelWirteForSeventhSheet.getShee(book,list);
+        return book;
+    }
+    /**
+     * 学生自觉居家观察健康状况表
+     * @param list 要遍历的数据集合
+     */
+    public static XSSFWorkbook getStudent(List<Questionnaire> list) {
+        // 创建工作簿
+        XSSFWorkbook book = new XSSFWorkbook();
+        // 创建工作表
+        ExcelWirteForStudentSheet.getShee(book,list);
+        return book;
+    }
+    /**
+     * 教职工自觉居家观察健康状况表
+     * @param list 要遍历的数据集合
+     */
+    public static XSSFWorkbook getTeacher(List<Questionnaire> list) {
+        // 创建工作簿
+        XSSFWorkbook book = new XSSFWorkbook();
+        // 创建工作表
+        ExcelWirteForTeacherSheet.getShee(book,list);
         return book;
     }
 }

@@ -21,7 +21,7 @@ public class ExcelWirteForThirdSheet {
      * @param list 要遍历的数据集合
      * @return
      */
-    public static XSSFSheet getShee3(XSSFWorkbook book,List<Questionnaire> list) {
+    public static XSSFSheet getShee(XSSFWorkbook book,List<Questionnaire> list) {
         String header[]={"来自湖北省（除武汉市）的市外人员排查日报表（二）"};
         String title[]={"序号","姓名","身份证号","联系电话","户口住址","电话排查内容","入户排查内容","管控措施（如为居家隔离，请询问是否有社区每日随访、是否有外出买菜、下楼活动等情况）","备注"};
         String title1[]={"离开湖北省的时间","目前在柳居住地","是否有咳嗽、胸闷、发烧等不适症状","离开湖北省的时间","到柳时间","目前在柳居住地","是否有咳嗽、胸闷、发烧等不适症状","车次/航班/汽车/自驾等回柳方式","同行人姓名"};

@@ -239,4 +239,14 @@ public class QuestionnaireService {
         return questionnaireDao.readAll(questionnairequery);
     }
 
+    /**
+     * 查询所有调查表
+     * @param questionnairequery 查询条件类
+     * @return  返回数量
+     */
+    public Integer querySize(QuestionnaireQuery questionnairequery){
+        return questionnaireDao.querySize(questionnairequery);
+    }
+
+
 }

@@ -18,7 +18,7 @@ public class ExcelWirteForFisrtSheet {
      * @param list 要遍历的数据集合
      * @return
      */
-    public static XSSFSheet getShee1(XSSFWorkbook book, DailyReportTable list) {
+    public static XSSFSheet getShee(XSSFWorkbook book, DailyReportTable list) {
         String header[] = {"重点人群排查管理日报表"};
         String header1[] = {"填报单位:", "签发时间：       年     月    日"};
         String title[] = {"来自武汉市的外人",

@@ -27,8 +27,8 @@ public class QuestionnaireQueryController {
     private DailyReportService dailyReportService;
 
     //获取今天的表1-1的内容
-    @GetMapping("/1-1")
-    public Map<String, Object> getTable1(){
+    @GetMapping("/dailyReport")
+    public Map<String, Object> dailyReport(){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
         map.put(Constant.JSON_DATA,dailyReportService.getDailyReportInTodayAndYesterDay());
@@ -36,8 +36,8 @@ public class QuestionnaireQueryController {
     }
 
     //获取今天的表1-2的内容
-    @GetMapping("/1-2")
-    public Map<String, Object> getTable2(Integer page, Integer limit){
+    @GetMapping("/comeFromWuHan")
+    public Map<String, Object> comeFromWuHan(Integer page, Integer limit){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
@@ -51,8 +51,8 @@ public class QuestionnaireQueryController {
 
 
     //获取今天的表1-3的内容
-    @GetMapping("/1-3")
-    public Map<String, Object> getTable3(Integer page, Integer limit){
+    @GetMapping("/comeFromHuBei")
+    public Map<String, Object> comeFromHuBei(Integer page, Integer limit){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
@@ -65,8 +65,8 @@ public class QuestionnaireQueryController {
     }
 
     //获取今天的表1-4的内容
-    @GetMapping("/1-4")
-    public Map<String, Object> getTable4(Integer page, Integer limit){
+    @GetMapping("/arriveWuHan")
+    public Map<String, Object> arriveWuHan(Integer page, Integer limit){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
@@ -79,8 +79,8 @@ public class QuestionnaireQueryController {
     }
 
     //获取今天的表1-5的内容
-    @GetMapping("/1-5")
-    public Map<String, Object> getTable5(Integer page, Integer limit){
+    @GetMapping("/arriveHuBei")
+    public Map<String, Object> arriveHuBei(Integer page, Integer limit){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
@@ -93,8 +93,8 @@ public class QuestionnaireQueryController {
     }
 
     //获取今天的表1-6的内容
-    @GetMapping("/1-6")
-    public Map<String, Object> getTable6(Integer page, Integer limit){
+    @GetMapping("/stayHuBei")
+    public Map<String, Object> stayHuBei(Integer page, Integer limit){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();
@@ -107,8 +107,8 @@ public class QuestionnaireQueryController {
     }
 
     //获取今天的表1-7的内容
-    @GetMapping("/1-7")
-    public Map<String, Object> getTable7(Integer page, Integer limit){
+    @GetMapping("/touchHuBei")
+    public Map<String, Object> touchHuBei(Integer page, Integer limit){
         Map<String, Object> map=new HashMap<String, Object>();
         map.put(Constant.JSON_CODE, JsonCode.SUCCESS.getValue());
         QuestionnaireQuery questionnairequery=new QuestionnaireQuery();

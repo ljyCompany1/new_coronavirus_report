@@ -13,6 +13,7 @@ public class QuestionnaireQuery extends Questionnaire {
     private Boolean arriveHuBeiOrWuHanQuery;//1月16日后，是否去过湖北(包括武汉市)。
     private Boolean studentQuery;//查询学生信息
     private Boolean teacherQuery;//查询教师信息
+    private Boolean myIllQuery;//查询本人是否生病
 
     public Date getQueryDate() {
         return queryDate;
@@ -44,5 +45,13 @@ public class QuestionnaireQuery extends Questionnaire {
 
     public void setArriveHuBeiOrWuHanQuery(Boolean arriveHuBeiOrWuHanQuery) {
         this.arriveHuBeiOrWuHanQuery = arriveHuBeiOrWuHanQuery;
+    }
+
+    public Boolean getMyIllQuery() {
+        return myIllQuery;
+    }
+
+    public void setMyIllQuery(Boolean myIllQuery) {
+        this.myIllQuery = myIllQuery;
     }
 }

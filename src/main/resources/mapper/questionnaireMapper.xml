@@ -11,11 +11,11 @@
       insert into questionnaire(id,identity,teacherNumber,studentNumber,sex,name,registeredPlace,
       identityCard,tel,workType,practice,practiceWorkStatus,comefromHuBei,comefromWuHan,arriveHuBei,arriveWuHan,stayInHubei,epidemicArea,
       addressInLiuZhou,arriveLiuZhou,leaveLiuZhou,leaveHubei,leaveHubeiWay,leaveTogetherPersonName,
-      manageMethods,touchHuBeiPerson,touchHuBeiTime,touchHuBeiDescription,schoolClass,myHealth,myfamilyHealth,intro,ip,createTime)
+      manageMethods,touchHuBeiPerson,touchHuBeiTime,touchHuBeiDescription,schoolClass,myHealth,myfamilyHealth,confirmIll,intro,ip,createTime)
       values(null,#{identity},#{teacherNumber},#{studentNumber},#{sex},#{name},#{registeredPlace},
       #{identityCard},#{tel},#{workType},#{practice},#{practiceWorkStatus},#{comefromHuBei},#{comefromWuHan},#{arriveHuBei},#{arriveWuHan},#{stayInHubei},#{epidemicArea},
       #{addressInLiuZhou},#{arriveLiuZhou},#{leaveLiuZhou},#{leaveHubei},#{leaveHubeiWay},#{leaveTogetherPersonName},
-      #{manageMethods},#{touchHuBeiPerson},#{touchHuBeiTime},#{touchHuBeiDescription},#{schoolClass},#{myHealth},#{myfamilyHealth},#{intro},#{ip},now())
+      #{manageMethods},#{touchHuBeiPerson},#{touchHuBeiTime},#{touchHuBeiDescription},#{schoolClass},#{myHealth},#{myfamilyHealth},#{confirmIll},#{intro},#{ip},now())
 </insert>
 
 
@@ -41,8 +41,16 @@
                 <if test="objectQuery.identity!=null and objectQuery.identity.length()>0">
                     and identit=#{objectQuery.identity}
                 </if>
+                <if test="objectQuery.schoolClass!=null and objectQuery.schoolClass.length()>0">
+                    <!-- bind，重新定义一个变量，可用于模糊查询等，并且可以直接覆盖原变量 -->
+                    <bind name="schoolClass" value="'%' + _parameter.objectQuery.schoolClass + '%'" />
+                    and schoolClass like #{schoolClass}
+                </if>
                 <if test="objectQuery.practice!=null">
                     and practice=#{objectQuery.practice}
+                </if>
+                <if test="objectQuery.myIllQuery!=null">
+                    and myHealth!='健康'
                 </if>
                 <if test="objectQuery.practiceWorkStatus!=null and objectQuery.practiceWorkStatus.length()>0">
                     and practiceWorkStatus=#{objectQuery.practiceWorkStatus}
@@ -76,6 +84,14 @@
                 </if>
                 <if test="objectQuery.teacherQuery!=null and objectQuery.teacherQuery==true">
                     and ( teacherNumber!='' or teacherNumber!=null)
+                </if>
+                <if test="objectQuery.schoolClass!=null and objectQuery.schoolClass.length()>0">
+                    <!-- bind，重新定义一个变量，可用于模糊查询等，并且可以直接覆盖原变量 -->
+                    <bind name="schoolClass" value="'%' + _parameter.objectQuery.schoolClass + '%'" />
+                    and schoolClass like #{schoolClass}
+                </if>
+                <if test="objectQuery.workType!=null and objectQuery.workType.length()>0">
+                    and workType=#{objectQuery.workType}
                 </if>
                 <if test="objectQuery.queryDate!=null">
                     and to_days(#{objectQuery.queryDate})=to_days(createTime)
