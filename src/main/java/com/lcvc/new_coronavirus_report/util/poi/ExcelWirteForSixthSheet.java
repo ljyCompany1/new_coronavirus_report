@@ -28,7 +28,7 @@ public class ExcelWirteForSixthSheet {
         String footer[]={"填报人：","审核人：","签发人："};
 
         // 创建一个工作表
-        XSSFSheet sheet = book.createSheet("1.6");
+        XSSFSheet sheet = book.createSheet("表六");
 
         // 设置单元格表单头部样式
         XSSFCellStyle headerStyle = book.createCellStyle();

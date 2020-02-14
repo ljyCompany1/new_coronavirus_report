@@ -21,7 +21,7 @@ public class ExcelWirteForFisrtSheet {
     public static XSSFSheet getShee(XSSFWorkbook book, DailyReportTable list) {
         String header[] = {"重点人群排查管理日报表"};
         String header1[] = {"填报单位:", "签发时间：       年     月    日"};
-        String title[] = {"来自武汉市的外人",
+        String title[] = {"来自武汉市的市外人员",
                 "来自湖北省(除武汉市外)的市外人员",
                 "我市到过武汉市的人员",
                 "我市到过湖北省(除武汉市外)的人员",
@@ -35,7 +35,7 @@ public class ExcelWirteForFisrtSheet {
 
 
         // 创建一个工作表
-        XSSFSheet sheet = book.createSheet("1.1");
+        XSSFSheet sheet = book.createSheet("表一");
 
         // 设置单元格表单头部样式
         CellStyle headerStyle = book.createCellStyle();

@@ -4,6 +4,9 @@ import com.lcvc.new_coronavirus_report.dao.StudentDao;
 import com.lcvc.new_coronavirus_report.dao.TeacherDao;
 import com.lcvc.new_coronavirus_report.model.Student;
 import com.lcvc.new_coronavirus_report.model.Teacher;
+import com.lcvc.new_coronavirus_report.model.base.PageObject;
+import com.lcvc.new_coronavirus_report.model.query.StudentQuery;
+import com.lcvc.new_coronavirus_report.model.query.TeacherQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -28,6 +31,18 @@ public class StudentService {
      */
     public Student get(@NotNull String studentNumber) {
         return studentDao.get(studentNumber);
+    }
+
+    /**
+     * 分页查询学生表
+     * @param page 当前页面
+     * @param limit  每页最多显示的记录数
+     * @param studentQuery 查询条件类
+     */
+    public PageObject query(Integer page, Integer limit, StudentQuery studentQuery){
+        PageObject pageObject = new PageObject(limit,page,studentDao.querySize(studentQuery));
+        pageObject.setList(studentDao.query(pageObject.getOffset(),pageObject.getLimit(),studentQuery));
+        return pageObject;
     }
 
 }

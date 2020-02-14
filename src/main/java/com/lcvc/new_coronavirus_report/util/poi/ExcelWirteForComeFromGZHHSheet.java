@@ -44,7 +44,7 @@ public class ExcelWirteForComeFromGZHHSheet {
                 "同行人姓名"};
 
         // 创建一个工作表
-        XSSFSheet sheet = book.createSheet("1.2");
+        XSSFSheet sheet = book.createSheet("表七");
 
 
         // 设置单元格表单头部样式

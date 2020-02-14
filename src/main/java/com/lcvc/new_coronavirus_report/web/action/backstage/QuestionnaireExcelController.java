@@ -237,5 +237,72 @@ public class QuestionnaireExcelController {
         this.outExcelStream(response,book," 实习学生当前在单位上岗情况表");
         return "SUCCESS";//这里其实就是随意返回一个字符串
     }
+    @GetMapping("/getAll")
+    public String getAllTable(Integer page, Integer limit,HttpServletResponse response){
+        //获取今天的表1-1的内容
+        DailyReportTable  dailyReportTable=  dailyReportService.getDailyReportInTodayAndYesterDay();
+        //获取今天的表1-2的内容
+        QuestionnaireQuery questionnairequery2=new QuestionnaireQuery();
+        questionnairequery2.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery2.setComefromWuHan(true);//查询来自武汉的记录
+        List<Questionnaire> list2=questionnaireService.query(questionnairequery2);//获取数据记录
+        //获取今天表1-3的内容
+        QuestionnaireQuery questionnairequery3=new QuestionnaireQuery();
+        questionnairequery3.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery3.setComefromHuBei(true);//查询来自湖北的记录
+        List<Questionnaire> list3=questionnaireService.query(questionnairequery3);//获取数据记录
+        //获取表4
+        QuestionnaireQuery questionnairequery4=new QuestionnaireQuery();
+        questionnairequery4.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery4.setArriveWuHan(true);//查询去过武汉的记录
+        List<Questionnaire> list4=questionnaireService.query(questionnairequery4);//获取数据记录
+        //获取表5
+        QuestionnaireQuery questionnairequery5=new QuestionnaireQuery();
+        questionnairequery5.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery5.setArriveHuBei(true);//查询去过湖北的记录
+        List<Questionnaire> list5=questionnaireService.query(questionnairequery5);//获取数据记录
+        //获取表六
+        QuestionnaireQuery questionnairequery6=new QuestionnaireQuery();
+        questionnairequery6.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery6.setStayInHubei(true);//查询当前依旧停留在湖北的
+        List<Questionnaire> list6=questionnaireService.query(questionnairequery6);//获取数据记录
+        //获取表7
+        QuestionnaireQuery questionnairequery7=new QuestionnaireQuery();
+        questionnairequery7.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery7.setComeFromGZHH(true);//查询来自广东、浙江、河南、湖南省的市外人员
+        List<Questionnaire> list7=questionnaireService.query(questionnairequery7);//获取数据记录
+        //获取表8
+        QuestionnaireQuery questionnairequery8=new QuestionnaireQuery();
+        questionnairequery8.setQueryDate(new Date());//查找今天的表内容
+        questionnairequery8.setArriveGZHH(true);//查询去过广东、浙江、河南、湖南省的市外人员
+        List<Questionnaire> list8=questionnaireService.query(questionnairequery8);//获取数据记录
+        //获取密切接触者表
+        QuestionnaireQuery questionnairequerytouch=new QuestionnaireQuery();
+        questionnairequerytouch.setQueryDate(new Date());//查找今天的表内容
+        questionnairequerytouch.setTouchHuBeiPerson(true);//查询去过密切接触疫区人员的记录
+        List<Questionnaire> touchlist=questionnaireService.query(questionnairequerytouch);//获取数据记录
+        Workbook book= ExcelWirteForTable.getAllSheet(dailyReportTable, list2, list3, list4,list5,list6,list7,list8,touchlist);//根据记录，生成excel表格
+       //创建文件对象，导出
+        this.outExcelStream(response,book,"柳州市重点人群排查工作相关表格");
+        return "SUCCESS";//这里其实就是随意返回一个字符串
+    }
+    //居家隔离观察健康状况表
+    @GetMapping("/studentTeacher")
+    public String getStudentTeacherTable(Integer page, Integer limit,HttpServletResponse response){
+        //teacher
+        QuestionnaireQuery questionnairequeryteacher=new QuestionnaireQuery();
+        questionnairequeryteacher.setQueryDate(new Date());//查找今天的表内容
+        questionnairequeryteacher.setTeacherQuery(true);//查询教师信息
+        List<Questionnaire> teacherlist=questionnaireService.query(questionnairequeryteacher);//获取数据记录
+        //student
+        QuestionnaireQuery questionnairequerystudent=new QuestionnaireQuery();
+        questionnairequerystudent.setQueryDate(new Date());//查找今天的表内容
+        questionnairequerystudent.setStudentQuery(true);//查询学生信息
+        List<Questionnaire> studentlist=questionnaireService.query(questionnairequerystudent);//获取数据记录
 
+        XSSFWorkbook book= ExcelWirteForTable.getStudentTeacherSheet(studentlist,teacherlist);//根据记录，生成excel表格
+        //创建文件对象，导出
+        this.outExcelStream(response,book," 居家隔离观察健康状况表");
+        return "SUCCESS";//这里其实就是随意返回一个字符串
+    }
 }

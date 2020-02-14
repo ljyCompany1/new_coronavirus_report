@@ -27,7 +27,7 @@ public class ExcelWirteForFifthSheet {
         String title1[]={"离开湖北省的时间","目前在柳居住地","是否有咳嗽、胸闷、发烧等不适症状","离开湖北省的时间","到柳时间","目前在柳居住地","是否有咳嗽、胸闷、发烧等不适症状","车次/航班/汽车/自驾等回柳方式","同行人姓名"};
 
         // 创建一个工作表
-        XSSFSheet sheet = book.createSheet("1.3");
+        XSSFSheet sheet = book.createSheet("表五");
 
 
         // 设置单元格表单头部样式
@@ -67,18 +67,6 @@ public class ExcelWirteForFifthSheet {
         title1Style.setAlignment(HorizontalAlignment.CENTER);
         title1Style.setVerticalAlignment(VerticalAlignment.CENTER); //
         title1Style.setWrapText(true);//自动换行
-
-        XSSFCellStyle bgcolorStyle = book.createCellStyle();
-        bgcolorStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-        bgcolorStyle.setFillPattern(FillPatternType.BIG_SPOTS);
-        bgcolorStyle.setFont(titlefont);
-        bgcolorStyle.setBorderBottom(BorderStyle.THIN);
-        bgcolorStyle.setBorderTop(BorderStyle.THIN);
-        bgcolorStyle.setBorderLeft(BorderStyle.THIN);
-        bgcolorStyle.setBorderRight(BorderStyle.THIN);
-        bgcolorStyle.setAlignment(HorizontalAlignment.CENTER);
-        bgcolorStyle.setVerticalAlignment(VerticalAlignment.CENTER); //
-        bgcolorStyle.setWrapText(true);//自动换行
 
 
         //
@@ -154,10 +142,8 @@ public class ExcelWirteForFifthSheet {
             if (i==8){
                 titleCell.setCellValue(title[6]);
             }
-            if (i==9)titleCell1.setCellStyle(bgcolorStyle);
             if (i==14){
                 titleCell.setCellValue(title[7]);
-                titleCell.setCellStyle(bgcolorStyle);
             }
             if (i==15)titleCell.setCellValue(title[8]);
         }
@@ -214,7 +200,7 @@ public class ExcelWirteForFifthSheet {
                 SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 intoArriveLiuZhou.setCellValue(formatter.format(list.get(i).getArriveLiuZhou()));
             }
-            intoArriveLiuZhou.setCellStyle(bgcolorStyle);
+            intoArriveLiuZhou.setCellStyle(titleStyle);
 
             XSSFCell intoAddressInLiuZhou= listRow.createCell(10);
             intoAddressInLiuZhou.setCellValue(list.get(i).getAddressInLiuZhou());
@@ -235,7 +221,7 @@ public class ExcelWirteForFifthSheet {
             //管控措施  备注
             XSSFCell manageMethods= listRow.createCell(14);
             manageMethods.setCellValue(list.get(i).getManageMethods());
-            manageMethods.setCellStyle(bgcolorStyle);
+            manageMethods.setCellStyle(titleStyle);
 
             XSSFCell intro= listRow.createCell(15);
             intro.setCellValue(list.get(i).getIntro());

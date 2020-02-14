@@ -12,6 +12,47 @@
         select count(1) from student
     </select>
 
+    <!--统一查询的条件，方便用于分页等查询，这里提供给query,querySize,readAll调用-->
+    <sql id="queryWhere">
+        <if test="objectQuery!=null">
+            <where>
+                <if test="objectQuery.studentNumber!=null and objectQuery.studentNumber.length()>0">
+                    and teacherNumber=#{objectQuery.teacherNumber}
+                </if>
+                <if test="objectQuery.name!=null and objectQuery.name.length()>0">
+                    <!-- bind，重新定义一个变量，可用于模糊查询等，并且可以直接覆盖原变量 -->
+                    <bind name="name" value="'%' + _parameter.objectQuery.name + '%'" />
+                    and name like #{name}
+                </if>
+                <if test="objectQuery.sex!=null and objectQuery.sex.length()>0">
+                    and sex=#{objectQuery.sex}
+                </if>
+                <if test="objectQuery.schoolClass!=null and objectQuery.schoolClass.length()>0">
+                    <!-- bind，重新定义一个变量，可用于模糊查询等，并且可以直接覆盖原变量 -->
+                    <bind name="schoolClass" value="'%' + _parameter.objectQuery.schoolClass + '%'" />
+                    and schoolClass like #{schoolClass}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <select id="readAll" resultType="Teacher">
+        select * from teacher
+        <include refid="queryWhere"></include>
+        order by teacherNumber asc
+    </select>
+
+    <select id="query" resultType="Questionnaire">
+        select * from teacher
+        <include refid="queryWhere"></include>
+        order by id desc limit #{offset},#{length}
+    </select>
+
+    <select id="querySize" resultType="Integer">
+        select count(1)  from teacher
+        <include refid="queryWhere"></include>
+    </select>
+
     <select id="readAll" resultType="Teacher">
         select * from student order by studentNumber asc
     </select>

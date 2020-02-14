@@ -48,6 +48,7 @@ public class QuestionnaireService {
         }
         //验证教工号或学号，并赋予相应信息
         if(questionnaire.getIdentity().equals("teacher")){
+            questionnaire.setStudentNumber(null);//清空学生的学号字段，防止前端同时提交工号和学号
             if(StringUtils.isEmpty(questionnaire.getTeacherNumber())){
                 throw new MyWebException("提交失败：必须填写教工号");
             }
@@ -70,6 +71,7 @@ public class QuestionnaireService {
                 throw new MyWebException("提交失败：该教工号不存在");
             }
         }else if(questionnaire.getIdentity().equals("student")){
+            questionnaire.setTeacherNumber(null);//清空教师的工号字段，防止前端同时提交工号和学号
             if(StringUtils.isEmpty(questionnaire.getStudentNumber())){
                 throw new MyWebException("提交失败：必须填写学号");
             }
